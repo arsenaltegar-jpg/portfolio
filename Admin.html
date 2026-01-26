@@ -1,0 +1,343 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Muhammad Hafiz</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --bg: #09090b;
+            --card: #18181b;
+            --border: rgba(255,255,255,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: #fafafa;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: var(--card);
+            border-right: 1px solid var(--border);
+            padding: 2rem;
+            position: fixed;
+            height: 100vh;
+            z-index: 10;
+        }
+
+            .sidebar h2 {
+                font-size: 1.5rem;
+                margin-bottom: 2rem;
+                background: linear-gradient(to right, #818cf8, #c084fc);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+        .main {
+            margin-left: 280px;
+            flex: 1;
+            padding: 3rem;
+            max-width: 1000px;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            color: #a1a1aa;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            background: #27272a;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: white;
+            outline: none;
+        }
+
+        /* Quill Dark Mode Fix */
+        #editor-container {
+            background: #27272a;
+            border: 1px solid var(--border);
+            border-radius: 0 0 8px 8px;
+            color: white;
+            min-height: 200px;
+        }
+
+        .ql-toolbar.ql-snow {
+            background: #3f3f46;
+            border: 1px solid var(--border) !important;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .ql-snow .ql-stroke {
+            stroke: #fff !important;
+        }
+
+        .ql-snow .ql-fill {
+            fill: #fff !important;
+        }
+
+        .ql-snow .ql-picker {
+            color: #fff !important;
+        }
+
+        .ql-container.ql-snow {
+            border: 1px solid var(--border) !important;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            transition: 0.2s;
+        }
+
+            .btn-primary:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+
+        .btn-cancel {
+            background: transparent;
+            color: #f87171;
+            border: none;
+            width: 100%;
+            margin-top: 1rem;
+            cursor: pointer;
+            display: none;
+        }
+
+        .project-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: #27272a;
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            border: 1px solid var(--border);
+        }
+
+            .project-item img {
+                width: 48px;
+                height: 48px;
+                border-radius: 6px;
+                object-fit: cover;
+            }
+
+        .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-edit {
+            background: #3f3f46;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btn-del {
+            background: #450a0a;
+            color: #f87171;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Hafiz.Admin</h2>
+        <div style="color: #71717a;">Status: <span id="status" style="color: #10b981;">Connected</span></div>
+    </div>
+
+    <div class="main">
+        <div class="card">
+            <h3 id="formTitle" style="margin-bottom: 1.5rem;">Create New Project</h3>
+            <form id="projectForm">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" id="title" required placeholder="Project Name">
+                </div>
+                <div class="form-group">
+                    <label>External URL</label>
+                    <input type="url" id="url" placeholder="https://...">
+                </div>
+                <div class="form-group">
+                    <label>Project Details (HTML)</label>
+                    <div id="editor-container"></div>
+                </div>
+                <div class="form-group">
+                    <label>Project Image</label>
+                    <input type="file" id="image" accept="image/*">
+                </div>
+                <button type="submit" id="submitBtn" class="btn-primary">Publish Project</button>
+                <button type="button" id="cancelBtn" class="btn-cancel" onclick="resetForm()">Discard Changes</button>
+            </form>
+        </div>
+
+        <h3 style="margin-bottom: 1rem;">Live Projects</h3>
+        <div id="projectsList"></div>
+    </div>
+
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script>
+        const SUPABASE_URL = 'https://zjxkykvkxfrndlcirfjg.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_MsYFfGjoGA-rl8PCjF-58Q_kGkMvzuF';
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        const quill = new Quill('#editor-container', {
+            theme: 'snow',
+            modules: { toolbar: [['bold', 'italic'], [{ 'list': 'bullet' }], ['link']] }
+        });
+
+        let imageFile = null;
+        let editingId = null;
+        let currentProjects = [];
+        let activeImageUrl = null;
+
+        document.getElementById('image').addEventListener('change', (e) => imageFile = e.target.files[0]);
+
+        async function uploadImage(file) {
+            const fileName = `${Date.now()}_${file.name.replace(/\s/g, '_')}`;
+            const { data, error } = await supabaseClient.storage.from('portfolio-images').upload(fileName, file);
+            if (error) throw error;
+            const { data: urlData } = supabaseClient.storage.from('portfolio-images').getPublicUrl(fileName);
+            return urlData.publicUrl;
+        }
+
+        window.editProject = (id) => {
+            const p = currentProjects.find(item => item.id === id);
+            editingId = id;
+            activeImageUrl = p.image_url;
+
+            document.getElementById('formTitle').innerText = "Edit: " + p.title;
+            document.getElementById('submitBtn').innerText = "Update Project Data";
+            document.getElementById('cancelBtn').style.display = "block";
+
+            document.getElementById('title').value = p.title;
+            document.getElementById('url').value = p.url || '';
+            quill.root.innerHTML = p.description;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        function resetForm() {
+            editingId = null;
+            activeImageUrl = null;
+            imageFile = null;
+            document.getElementById('projectForm').reset();
+            quill.setContents([]);
+            document.getElementById('formTitle').innerText = "Create New Project";
+            document.getElementById('submitBtn').innerText = "Publish Project";
+            document.getElementById('cancelBtn').style.display = "none";
+        }
+
+        document.getElementById('projectForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.innerText = "Saving to Database...";
+
+            try {
+                let finalImageUrl = activeImageUrl;
+                if (imageFile) {
+                    finalImageUrl = await uploadImage(imageFile);
+                }
+
+                const pData = {
+                    title: document.getElementById('title').value,
+                    url: document.getElementById('url').value,
+                    description: quill.root.innerHTML,
+                    image_url: finalImageUrl
+                };
+
+                const { data, error } = editingId
+                    ? await supabaseClient.from('projects').update(pData).eq('id', editingId).select()
+                    : await supabaseClient.from('projects').insert([pData]).select();
+
+                if (error) throw error;
+
+                alert('Success! Database updated.');
+                resetForm();
+                await loadProjects();
+            } catch (err) {
+                alert("Update Failed: " + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerText = editingId ? "Update Project Data" : "Publish Project";
+            }
+        });
+
+        async function loadProjects() {
+            const { data, error } = await supabaseClient
+                .from('projects')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (error) return;
+            currentProjects = data;
+
+            document.getElementById('projectsList').innerHTML = data.map(p => `
+                    <div class="project-item">
+                        <div style="display:flex; align-items:center; gap:1rem;">
+                            <img src="${p.image_url || ''}?t=${Date.now()}">
+                            <span>${p.title}</span>
+                        </div>
+                        <div class="actions">
+                            <button class="btn-edit" onclick="editProject(${p.id})">Edit</button>
+                            <button class="btn-del" onclick="deleteProject(${p.id})">Delete</button>
+                        </div>
+                    </div>
+                `).join('');
+        }
+
+        window.deleteProject = async (id) => {
+            if (confirm('Permanently delete this project?')) {
+                await supabaseClient.from('projects').delete().eq('id', id);
+                loadProjects();
+            }
+        };
+
+        loadProjects();
+    </script>
+</body>
+</html>
