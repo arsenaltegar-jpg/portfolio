@@ -10,6 +10,7 @@
             --primary: #6366f1;
             --bg: #030712;
             --card: rgba(31, 41, 55, 0.5);
+            --border: rgba(255,255,255,0.1);
         }
 
         * {
@@ -52,7 +53,7 @@
 
         .card {
             background: var(--card);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid var(--border);
             border-radius: 20px;
             overflow: hidden;
             cursor: pointer;
@@ -75,7 +76,6 @@
             padding: 1.5rem;
         }
 
-        /* Modal Layout */
         .modal {
             position: fixed;
             inset: 0;
@@ -138,6 +138,12 @@
             margin: 1.5rem 0 1rem;
         }
 
+        /* Proper list styling for AI pasted content */
+        .rich-content ul, .rich-content ol {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
         .btn-link {
             display: inline-block;
             margin-top: 2rem;
@@ -178,7 +184,6 @@
         let projects = [];
 
         async function load() {
-            // Added Cache Busting to the request
             const { data, error } = await supabaseClient
                 .from('projects')
                 .select('*')
@@ -187,13 +192,15 @@
             if (error) return;
             projects = data;
 
-            const timestamp = Date.now();
+            const ts = Date.now();
             document.getElementById('grid').innerHTML = data.map((p, i) => `
                     <div class="card" onclick="openModal(${i})">
-                        <img src="${p.image_url || ''}?t=${timestamp}">
+                        <img src="${p.image_url || ''}?t=${ts}">
                         <div class="card-content">
                             <h3>${p.title}</h3>
-                            <p style="color: #64748b; font-size: 0.9rem; margin-top: 5px;">View Case Study &rarr;</p>
+                            <p style="color: #64748b; font-size: 0.9rem; margin-top: 5px;">
+                                ${p.url ? 'View Case Study &rarr;' : '<span style="color:#f87171;">Local System / Offline</span>'}
+                            </p>
                         </div>
                     </div>
                 `).join('');
@@ -202,12 +209,11 @@
         function openModal(i) {
             const p = projects[i];
             document.getElementById('mTitle').innerText = p.title;
-            // Force refresh image in modal too
             document.getElementById('mImg').src = p.image_url ? `${p.image_url}?t=${Date.now()}` : '';
             document.getElementById('mDesc').innerHTML = p.description;
 
             const link = document.getElementById('mLink');
-            if (p.url) {
+            if (p.url && p.url.trim() !== "") {
                 link.href = p.url;
                 link.style.display = 'inline-block';
             } else {
