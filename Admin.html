@@ -83,13 +83,12 @@
             outline: none;
         }
 
-        /* Quill Dark Mode Fix */
         #editor-container {
             background: #27272a;
             border: 1px solid var(--border);
             border-radius: 0 0 8px 8px;
             color: white;
-            min-height: 200px;
+            min-height: 250px;
         }
 
         .ql-toolbar.ql-snow {
@@ -198,11 +197,11 @@
                     <input type="text" id="title" required placeholder="Project Name">
                 </div>
                 <div class="form-group">
-                    <label>External URL</label>
+                    <label>External URL (Leave blank if Offline)</label>
                     <input type="url" id="url" placeholder="https://...">
                 </div>
                 <div class="form-group">
-                    <label>Project Details (HTML)</label>
+                    <label>Project Details (AI Format Preserved)</label>
                     <div id="editor-container"></div>
                 </div>
                 <div class="form-group">
@@ -224,9 +223,18 @@
         const SUPABASE_ANON_KEY = 'sb_publishable_MsYFfGjoGA-rl8PCjF-58Q_kGkMvzuF';
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+        // Enhanced Quill configuration to maintain rich formatting from AI pastes
         const quill = new Quill('#editor-container', {
             theme: 'snow',
-            modules: { toolbar: [['bold', 'italic'], [{ 'list': 'bullet' }], ['link']] }
+            modules: {
+                toolbar: [
+                    [{ 'header': [1, 2, 3, false] }],
+                    ['bold', 'italic', 'underline'],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                    ['link', 'blockquote', 'code-block'],
+                    ['clean']
+                ]
+            }
         });
 
         let imageFile = null;
@@ -248,15 +256,12 @@
             const p = currentProjects.find(item => item.id === id);
             editingId = id;
             activeImageUrl = p.image_url;
-
             document.getElementById('formTitle').innerText = "Edit: " + p.title;
             document.getElementById('submitBtn').innerText = "Update Project Data";
             document.getElementById('cancelBtn').style.display = "block";
-
             document.getElementById('title').value = p.title;
             document.getElementById('url').value = p.url || '';
             quill.root.innerHTML = p.description;
-
             window.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
@@ -279,23 +284,20 @@
 
             try {
                 let finalImageUrl = activeImageUrl;
-                if (imageFile) {
-                    finalImageUrl = await uploadImage(imageFile);
-                }
+                if (imageFile) finalImageUrl = await uploadImage(imageFile);
 
                 const pData = {
                     title: document.getElementById('title').value,
-                    url: document.getElementById('url').value,
+                    url: document.getElementById('url').value || null, // Handles empty URL
                     description: quill.root.innerHTML,
                     image_url: finalImageUrl
                 };
 
-                const { data, error } = editingId
-                    ? await supabaseClient.from('projects').update(pData).eq('id', editingId).select()
-                    : await supabaseClient.from('projects').insert([pData]).select();
+                const { error } = editingId
+                    ? await supabaseClient.from('projects').update(pData).eq('id', editingId)
+                    : await supabaseClient.from('projects').insert([pData]);
 
                 if (error) throw error;
-
                 alert('Success! Database updated.');
                 resetForm();
                 await loadProjects();
@@ -308,14 +310,9 @@
         });
 
         async function loadProjects() {
-            const { data, error } = await supabaseClient
-                .from('projects')
-                .select('*')
-                .order('created_at', { ascending: false });
-
+            const { data, error } = await supabaseClient.from('projects').select('*').order('created_at', { ascending: false });
             if (error) return;
             currentProjects = data;
-
             document.getElementById('projectsList').innerHTML = data.map(p => `
                     <div class="project-item">
                         <div style="display:flex; align-items:center; gap:1rem;">

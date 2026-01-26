@@ -1,0 +1,235 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammad Hafiz | Portfolio</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --bg: #030712;
+            --card: rgba(31, 41, 55, 0.5);
+            --border: rgba(255,255,255,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: #f3f4f6;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+            header h1 {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+                background: linear-gradient(to right, #fff, #6366f1);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+        }
+
+            .card:hover {
+                transform: translateY(-8px);
+                border-color: var(--primary);
+            }
+
+            .card img {
+                width: 100%;
+                height: 220px;
+                object-fit: cover;
+            }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(15px);
+            display: none;
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: #0f172a;
+            width: 100%;
+            max-width: 850px;
+            max-height: 85vh;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            overflow-y: auto;
+            position: relative;
+            animation: pop 0.3s ease-out;
+        }
+
+        @keyframes pop {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .close {
+            position: sticky;
+            top: 15px;
+            float: right;
+            margin-right: 15px;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 10;
+            color: #fff;
+        }
+
+        .modal-body {
+            padding: 3rem;
+        }
+
+        .rich-content img {
+            max-width: 100%;
+            border-radius: 12px;
+            margin: 1rem 0;
+        }
+
+        .rich-content h1, .rich-content h2 {
+            color: #fff;
+            margin: 1.5rem 0 1rem;
+        }
+
+        /* Proper list styling for AI pasted content */
+        .rich-content ul, .rich-content ol {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .btn-link {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 0.8rem 2rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Recent Projects</h1>
+            <p style="color: #94a3b8;">Showcasing refined engineering and design</p>
+        </header>
+        <div id="grid" class="grid"></div>
+    </div>
+
+    <div id="modal" class="modal" onclick="if(event.target==this) closeModal()">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img id="mImg" src="" style="width:100%; max-height:400px; object-fit:cover;">
+            <div class="modal-body">
+                <h1 id="mTitle"></h1>
+                <div id="mDesc" class="rich-content"></div>
+                <a id="mLink" href="#" target="_blank" class="btn-link">Explore Website</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SUPABASE_URL = 'https://zjxkykvkxfrndlcirfjg.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_MsYFfGjoGA-rl8PCjF-58Q_kGkMvzuF';
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        let projects = [];
+
+        async function load() {
+            const { data, error } = await supabaseClient
+                .from('projects')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (error) return;
+            projects = data;
+
+            const ts = Date.now();
+            document.getElementById('grid').innerHTML = data.map((p, i) => `
+                    <div class="card" onclick="openModal(${i})">
+                        <img src="${p.image_url || ''}?t=${ts}">
+                        <div class="card-content">
+                            <h3>${p.title}</h3>
+                            <p style="color: #64748b; font-size: 0.9rem; margin-top: 5px;">
+                                ${p.url ? 'View Case Study &rarr;' : '<span style="color:#f87171;">Local System / Offline</span>'}
+                            </p>
+                        </div>
+                    </div>
+                `).join('');
+        }
+
+        function openModal(i) {
+            const p = projects[i];
+            document.getElementById('mTitle').innerText = p.title;
+            document.getElementById('mImg').src = p.image_url ? `${p.image_url}?t=${Date.now()}` : '';
+            document.getElementById('mDesc').innerHTML = p.description;
+
+            const link = document.getElementById('mLink');
+            if (p.url && p.url.trim() !== "") {
+                link.href = p.url;
+                link.style.display = 'inline-block';
+            } else {
+                link.style.display = 'none';
+            }
+
+            document.getElementById('modal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        load();
+    </script>
+</body>
+</html>
