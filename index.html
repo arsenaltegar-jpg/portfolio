@@ -9,7 +9,7 @@
     <style>
         :root {
             --primary: #6366f1;
-            --primary-glow: rgba(99, 102, 241, 0.2);
+            --primary-glow: rgba(99, 102, 241, 0.3);
             --bg: #030712;
             --card: rgba(17, 24, 39, 0.7);
             --border: rgba(255,255,255,0.08);
@@ -33,13 +33,28 @@
         /* Hero / About Section */
         .hero {
             background: radial-gradient(circle at top center, #1e1b4b 0%, #030712 100%);
-            padding: 8rem 2rem 4rem;
+            padding: 6rem 2rem 4rem;
             text-align: center;
         }
 
         .container {
             max-width: 1100px;
             margin: 0 auto;
+        }
+
+        .profile-img {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 4px solid var(--primary);
+            margin-bottom: 2rem;
+            object-fit: cover;
+            box-shadow: 0 0 30px var(--primary-glow);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05);
         }
 
         .profile-header h1 {
@@ -49,16 +64,16 @@
             background: linear-gradient(to right, #fff, #818cf8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .about-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
             text-align: left;
             margin-top: 4rem;
-            align-items: center;
+            align-items: start;
         }
 
         .about-text p {
@@ -70,7 +85,7 @@
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
+            gap: 1.2rem;
         }
 
         .stat-card {
@@ -78,33 +93,37 @@
             padding: 1.5rem;
             border-radius: 16px;
             border: 1px solid var(--border);
+            text-align: center;
+            backdrop-filter: blur(10px);
         }
 
         .stat-card h4 {
             color: var(--primary);
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             margin-bottom: 0.2rem;
         }
 
         .stat-card span {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             color: #fff;
+            font-weight: 600;
         }
 
         /* Projects Section */
         .section-title {
             text-align: center;
             margin: 6rem 0 3rem;
-            font-size: 2rem;
+            font-size: 2.2rem;
+            font-weight: 700;
         }
 
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
             gap: 2.5rem;
-            padding-bottom: 5rem;
+            padding-bottom: 8rem;
         }
 
         .card {
@@ -114,6 +133,7 @@
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
+            cursor: pointer;
         }
 
         .card:hover {
@@ -126,12 +146,12 @@
             width: 100%;
             height: 240px;
             object-fit: cover;
-            filter: grayscale(20%);
+            filter: brightness(0.9);
             transition: 0.4s;
         }
 
         .card:hover img {
-            filter: grayscale(0%);
+            filter: brightness(1.1);
         }
 
         .card-content {
@@ -139,16 +159,17 @@
         }
 
         .card-content h3 {
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+            margin-bottom: 0.6rem;
+            color: #fff;
         }
 
         /* Modal Enhancements */
         .modal {
             position: fixed;
             inset: 0;
-            background: rgba(3, 7, 18, 0.9);
-            backdrop-filter: blur(20px);
+            background: rgba(3, 7, 18, 0.95);
+            backdrop-filter: blur(15px);
             display: none;
             z-index: 100;
             justify-content: center;
@@ -165,6 +186,12 @@
             border: 1px solid var(--border);
             overflow-y: auto;
             position: relative;
+            animation: slideUp 0.4s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .modal-body {
@@ -179,7 +206,7 @@
         .btn-link {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             margin-top: 2rem;
             padding: 1rem 2.5rem;
             background: var(--primary);
@@ -192,18 +219,25 @@
 
         .btn-link:hover {
             background: #4f46e5;
-            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--primary-glow);
         }
 
         .social-link {
             color: var(--primary);
             text-decoration: none;
             font-weight: 600;
+            border-bottom: 1px solid transparent;
+            transition: 0.3s;
         }
 
-        @media (max-width: 768px) {
-            .about-grid { grid-template-columns: 1fr; }
+        .social-link:hover {
+            border-bottom-color: var(--primary);
+        }
+
+        @media (max-width: 850px) {
+            .about-grid { grid-template-columns: 1fr; gap: 2rem; }
             .hero { padding-top: 4rem; }
+            .modal-body { padding: 2rem; }
         }
     </style>
 </head>
@@ -211,44 +245,51 @@
 
     <section class="hero">
         <div class="container">
+            <img src="https://zjxkykvkxfrndlcirfjg.supabase.co/storage/v1/object/public/assets/profile.jpg" 
+                 alt="Muhammad Hafiz" 
+                 class="profile-img"
+                 onerror="this.src='https://ui-avatars.com/api/?name=Muhammad+Hafiz&background=6366f1&color=fff&size=200'">
+            
             <div class="profile-header">
                 <h1>Muhammad Hafiz Harun</h1>
-                <p style="font-size: 1.2rem; color: var(--primary); font-weight: 600;">Systems Optimization • IT Infrastructure • AI Implementation</p>
+                <p style="font-size: 1.25rem; color: var(--primary); font-weight: 600; letter-spacing: 1px;">
+                    SYSTEMS OPTIMIZATION • IT INFRASTRUCTURE • ISO AUDITOR
+                </p>
             </div>
 
             <div class="about-grid">
                 <div class="about-text">
                     <p>
-                        With <strong>over 18 years</strong> of cross-functional experience in programming and IT infrastructure, 
-                        I bridge the gap between complex engineering and efficient system optimization.
+                        With <strong>over 18 years</strong> of deep-rooted experience in programming and IT infrastructure, 
+                        I specialize in building resilient technology foundations and optimizing complex system architectures.
                     </p>
                     <p>
-                        My background as an <strong>Internal Auditor for ISO Standards</strong> (Quality, Environmental, Health & Safety) 
-                        ensures that every solution I build is rooted in compliance, reliability, and precision.
+                        My expertise is uniquely bolstered by my role as an <strong>Internal Auditor for ISO Standards</strong> 
+                        (Quality, Environmental, Health & Safety), bringing a rigorous, audit-ready mindset to every engineering project.
                     </p>
                     <p>
-                        Currently, I leverage <strong>AI-driven workflows</strong> to accelerate development cycles and drive 
-                        data-informed decision-making. I believe in technology that adapts and contributes to growth.
+                        By integrating <strong>modern AI tools</strong> into my workflow, I bridge the gap between traditional 
+                        robustness and next-generation efficiency, ensuring scalable and smart technology solutions.
                     </p>
-                    <a href="https://www.linkedin.com/in/muhammad-hafiz-harun-18180323/" target="_blank" class="social-link">Connect on LinkedIn →</a>
+                    <a href="https://www.linkedin.com/in/muhammad-hafiz-harun-18180323/" target="_blank" class="social-link">View Professional Profile on LinkedIn →</a>
                 </div>
 
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <h4>18+ Years</h4>
-                        <span>IT Experience</span>
+                        <h4>18+</h4>
+                        <span>Years Exp</span>
                     </div>
                     <div class="stat-card">
                         <h4>ISO</h4>
-                        <span>Internal Auditor</span>
+                        <span>Auditor</span>
                     </div>
                     <div class="stat-card">
-                        <h4>AI-Integrated</h4>
-                        <span>Workflow</span>
+                        <h4>AI</h4>
+                        <span>Integrated</span>
                     </div>
                     <div class="stat-card">
-                        <h4>Full-Stack</h4>
-                        <span>Development</span>
+                        <h4>Full</h4>
+                        <span>Stack</span>
                     </div>
                 </div>
             </div>
@@ -256,18 +297,18 @@
     </section>
 
     <div class="container">
-        <h2 class="section-title"> Recent Projects</h2>
+        <h2 class="section-title">Technical Portfolio</h2>
         <div id="grid" class="grid"></div>
     </div>
 
     <div id="modal" class="modal" onclick="if(event.target==this) closeModal()">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()" style="position: absolute; right: 25px; top: 20px; font-size: 2.5rem; cursor: pointer;">&times;</span>
-            <img id="mImg" src="" style="width:100%; max-height:450px; object-fit:cover;">
+            <span class="close" onclick="closeModal()" style="position: absolute; right: 25px; top: 20px; font-size: 2.5rem; cursor: pointer; color: #fff; z-index: 10;">&times;</span>
+            <img id="mImg" src="" style="width:100%; max-height:450px; object-fit:cover; border-bottom: 1px solid var(--border);">
             <div class="modal-body">
-                <h1 id="mTitle" style="margin-bottom: 1rem;"></h1>
+                <h1 id="mTitle" style="margin-bottom: 1.5rem; font-size: 2.5rem;"></h1>
                 <div id="mDesc" class="rich-content"></div>
-                <a id="mLink" href="#" target="_blank" class="btn-link">Explore Website</a>
+                <a id="mLink" href="#" target="_blank" class="btn-link">🚀 Launch Live Project</a>
             </div>
         </div>
     </div>
@@ -284,17 +325,21 @@
                 .select('*')
                 .order('created_at', { ascending: false });
 
-            if (error) return;
+            if (error) {
+                console.error("Error fetching projects:", error);
+                return;
+            }
+            
             projects = data;
-
             const ts = Date.now();
+            
             document.getElementById('grid').innerHTML = data.map((p, i) => `
                     <div class="card" onclick="openModal(${i})">
-                        <img src="${p.image_url || ''}?t=${ts}">
+                        <img src="${p.image_url || 'https://via.placeholder.com/400x240?text=Project+Image'}?t=${ts}" alt="${p.title}">
                         <div class="card-content">
                             <h3>${p.title}</h3>
-                            <p style="color: #64748b; font-size: 0.9rem;">
-                                ${p.url ? 'View Project <span style="margin-left:5px;">→</span>' : '<span style="color:#f87171;">Internal System</span>'}
+                            <p style="color: var(--primary); font-size: 0.9rem; font-weight: 600;">
+                                ${p.url ? 'View Case Study →' : '<span style="color:#f87171;">Offline System</span>'}
                             </p>
                         </div>
                     </div>
@@ -324,6 +369,7 @@
             document.body.style.overflow = 'auto';
         }
 
+        // Initialize
         load();
     </script>
 </body>
