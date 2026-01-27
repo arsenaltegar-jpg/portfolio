@@ -43,18 +43,18 @@
         }
 
         .profile-img {
-            width: 160px;
-            height: 160px;
+            width: 180px;
+            height: 180px;
             border-radius: 50%;
             border: 4px solid var(--primary);
             margin-bottom: 2rem;
             object-fit: cover;
-            box-shadow: 0 0 30px var(--primary-glow);
-            transition: transform 0.3s ease;
+            box-shadow: 0 0 40px var(--primary-glow);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .profile-img:hover {
-            transform: scale(1.05);
+            transform: scale(1.1) rotate(2deg);
         }
 
         .profile-header h1 {
@@ -77,7 +77,7 @@
         }
 
         .about-text p {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             color: var(--text-muted);
             margin-bottom: 1.5rem;
         }
@@ -90,16 +90,22 @@
 
         .stat-card {
             background: var(--card);
-            padding: 1.5rem;
-            border-radius: 16px;
+            padding: 1.8rem 1rem;
+            border-radius: 20px;
             border: 1px solid var(--border);
             text-align: center;
             backdrop-filter: blur(10px);
+            transition: 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.05);
         }
 
         .stat-card h4 {
             color: var(--primary);
-            font-size: 1.6rem;
+            font-size: 1.7rem;
             margin-bottom: 0.2rem;
         }
 
@@ -146,30 +152,24 @@
             width: 100%;
             height: 240px;
             object-fit: cover;
-            filter: brightness(0.9);
+            filter: brightness(0.85);
             transition: 0.4s;
         }
 
         .card:hover img {
-            filter: brightness(1.1);
+            filter: brightness(1.05);
         }
 
         .card-content {
             padding: 1.8rem;
         }
 
-        .card-content h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.6rem;
-            color: #fff;
-        }
-
-        /* Modal Enhancements */
+        /* Modal */
         .modal {
             position: fixed;
             inset: 0;
-            background: rgba(3, 7, 18, 0.95);
-            backdrop-filter: blur(15px);
+            background: rgba(3, 7, 18, 0.96);
+            backdrop-filter: blur(20px);
             display: none;
             z-index: 100;
             justify-content: center;
@@ -190,17 +190,12 @@
         }
 
         @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .modal-body {
             padding: 3.5rem;
-        }
-
-        .rich-content {
-            font-size: 1.1rem;
-            color: #cbd5e1;
         }
 
         .btn-link {
@@ -212,30 +207,19 @@
             background: var(--primary);
             color: white;
             text-decoration: none;
-            border-radius: 12px;
+            border-radius: 14px;
             font-weight: 600;
             transition: 0.3s;
         }
 
         .btn-link:hover {
             background: #4f46e5;
-            box-shadow: 0 0 20px var(--primary-glow);
-        }
-
-        .social-link {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            border-bottom: 1px solid transparent;
-            transition: 0.3s;
-        }
-
-        .social-link:hover {
-            border-bottom-color: var(--primary);
+            box-shadow: 0 10px 20px -5px var(--primary-glow);
+            transform: translateY(-2px);
         }
 
         @media (max-width: 850px) {
-            .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .about-grid { grid-template-columns: 1fr; gap: 3rem; }
             .hero { padding-top: 4rem; }
             .modal-body { padding: 2rem; }
         }
@@ -245,39 +229,36 @@
 
     <section class="hero">
         <div class="container">
-            <img src="https://zjxkykvkxfrndlcirfjg.supabase.co/storage/v1/object/public/assets/profile.jpg" 
-                 alt="Muhammad Hafiz" 
+            <img src="https://media.licdn.com/dms/image/v2/D5603AQE1EDjdiid1ew/profile-displayphoto-crop_800_800/B56Zk3.FK_KAAI-/0/1757580647419?e=1770854400&v=beta&t=n-8HGgo9Ivmj-j0CTtlbRx2Moko3AXvYC3jFGlfiHNU" 
+                 alt="Muhammad Hafiz Harun" 
                  class="profile-img"
                  onerror="this.src='https://ui-avatars.com/api/?name=Muhammad+Hafiz&background=6366f1&color=fff&size=200'">
             
             <div class="profile-header">
                 <h1>Muhammad Hafiz Harun</h1>
-                <p style="font-size: 1.25rem; color: var(--primary); font-weight: 600; letter-spacing: 1px;">
-                    SYSTEMS OPTIMIZATION • IT INFRASTRUCTURE • ISO AUDITOR
+                <p style="font-size: 1.3rem; color: var(--primary); font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;">
+                    Solutions Architect • IT Infrastructure • ISO Internal Auditor
                 </p>
             </div>
 
             <div class="about-grid">
                 <div class="about-text">
                     <p>
-                        With <strong>over 18 years</strong> of deep-rooted experience in programming and IT infrastructure, 
-                        I specialize in building resilient technology foundations and optimizing complex system architectures.
+                        With <strong>over 18 years</strong> of expertise in programming and IT infrastructure management, I specialize in engineering high-performance systems and optimizing digital landscapes.
                     </p>
                     <p>
-                        My expertise is uniquely bolstered by my role as an <strong>Internal Auditor for ISO Standards</strong> 
-                        (Quality, Environmental, Health & Safety), bringing a rigorous, audit-ready mindset to every engineering project.
+                        My background as an <strong>Internal Auditor for ISO Standards</strong> (Quality, Environmental, Health & Safety) ensures that every solution I architect is grounded in compliance, reliability, and precision.
                     </p>
                     <p>
-                        By integrating <strong>modern AI tools</strong> into my workflow, I bridge the gap between traditional 
-                        robustness and next-generation efficiency, ensuring scalable and smart technology solutions.
+                        I actively integrate <strong>AI-driven methodologies</strong> to streamline development cycles and enhance decision-making accuracy, combining seasoned experience with modern innovation.
                     </p>
-                    <a href="https://www.linkedin.com/in/muhammad-hafiz-harun-18180323/" target="_blank" class="social-link">View Professional Profile on LinkedIn →</a>
+                    <a href="https://www.linkedin.com/in/muhammad-hafiz-harun-18180323/" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: 600; border-bottom: 1px solid var(--primary);">Connect on LinkedIn &rarr;</a>
                 </div>
 
                 <div class="stats-grid">
                     <div class="stat-card">
                         <h4>18+</h4>
-                        <span>Years Exp</span>
+                        <span>Years XP</span>
                     </div>
                     <div class="stat-card">
                         <h4>ISO</h4>
@@ -285,11 +266,11 @@
                     </div>
                     <div class="stat-card">
                         <h4>AI</h4>
-                        <span>Integrated</span>
+                        <span>Optimized</span>
                     </div>
                     <div class="stat-card">
-                        <h4>Full</h4>
-                        <span>Stack</span>
+                        <h4>Systems</h4>
+                        <span>Architect</span>
                     </div>
                 </div>
             </div>
@@ -297,7 +278,7 @@
     </section>
 
     <div class="container">
-        <h2 class="section-title">Technical Portfolio</h2>
+        <h2 class="section-title">Selected Projects</h2>
         <div id="grid" class="grid"></div>
     </div>
 
@@ -306,9 +287,9 @@
             <span class="close" onclick="closeModal()" style="position: absolute; right: 25px; top: 20px; font-size: 2.5rem; cursor: pointer; color: #fff; z-index: 10;">&times;</span>
             <img id="mImg" src="" style="width:100%; max-height:450px; object-fit:cover; border-bottom: 1px solid var(--border);">
             <div class="modal-body">
-                <h1 id="mTitle" style="margin-bottom: 1.5rem; font-size: 2.5rem;"></h1>
-                <div id="mDesc" class="rich-content"></div>
-                <a id="mLink" href="#" target="_blank" class="btn-link">🚀 Launch Live Project</a>
+                <h1 id="mTitle" style="margin-bottom: 1.5rem; font-size: 2.5rem; color: #fff;"></h1>
+                <div id="mDesc" style="font-size: 1.1rem; color: #cbd5e1; line-height: 1.8;"></div>
+                <a id="mLink" href="#" target="_blank" class="btn-link">Explore Live Solution</a>
             </div>
         </div>
     </div>
@@ -325,21 +306,17 @@
                 .select('*')
                 .order('created_at', { ascending: false });
 
-            if (error) {
-                console.error("Error fetching projects:", error);
-                return;
-            }
-            
+            if (error) return;
             projects = data;
-            const ts = Date.now();
             
+            const ts = Date.now();
             document.getElementById('grid').innerHTML = data.map((p, i) => `
                     <div class="card" onclick="openModal(${i})">
-                        <img src="${p.image_url || 'https://via.placeholder.com/400x240?text=Project+Image'}?t=${ts}" alt="${p.title}">
+                        <img src="${p.image_url || ''}?t=${ts}">
                         <div class="card-content">
-                            <h3>${p.title}</h3>
+                            <h3 style="color: #fff; margin-bottom: 0.5rem;">${p.title}</h3>
                             <p style="color: var(--primary); font-size: 0.9rem; font-weight: 600;">
-                                ${p.url ? 'View Case Study →' : '<span style="color:#f87171;">Offline System</span>'}
+                                ${p.url ? 'Case Study Details &rarr;' : '<span style="color:#f87171;">Internal System</span>'}
                             </p>
                         </div>
                     </div>
@@ -369,7 +346,6 @@
             document.body.style.overflow = 'auto';
         }
 
-        // Initialize
         load();
     </script>
 </body>
