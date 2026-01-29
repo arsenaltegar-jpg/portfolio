@@ -16,11 +16,7 @@
             --text-muted: #94a3b8;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -30,265 +26,217 @@
             overflow-x: hidden;
         }
 
-        /* Hero / About Section */
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+
+        /* Hero Section */
         .hero {
             background: radial-gradient(circle at top center, #1e1b4b 0%, #030712 100%);
-            padding: 6rem 2rem 4rem;
+            padding: 6rem 0 4rem;
             text-align: center;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
         }
 
         .profile-img {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            border: 4px solid var(--primary);
-            margin-bottom: 2rem;
-            object-fit: cover;
-            box-shadow: 0 0 40px var(--primary-glow);
+            width: 180px; height: 180px; border-radius: 50%;
+            border: 4px solid var(--primary); margin-bottom: 2rem;
+            object-fit: cover; box-shadow: 0 0 40px var(--primary-glow);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .profile-img:hover {
-            transform: scale(1.1) rotate(2deg);
-        }
+        .profile-img:hover { transform: scale(1.1) rotate(2deg); }
 
         .profile-header h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 800;
-            letter-spacing: -0.02em;
+            font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800;
             background: linear-gradient(to right, #fff, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             margin-bottom: 1rem;
         }
 
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 4rem;
-            text-align: left;
-            margin-top: 4rem;
-            align-items: start;
-        }
+        .about-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4rem; text-align: left; margin-top: 4rem; }
 
-        .about-text p {
-            font-size: 1.15rem;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.2rem;
-        }
+        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
 
         .stat-card {
-            background: var(--card);
-            padding: 1.8rem 1rem;
-            border-radius: 20px;
-            border: 1px solid var(--border);
-            text-align: center;
-            backdrop-filter: blur(10px);
-            transition: 0.3s;
+            background: var(--card); padding: 1.8rem 1rem; border-radius: 20px;
+            border: 1px solid var(--border); text-align: center; backdrop-filter: blur(10px);
         }
 
-        .stat-card:hover {
-            border-color: var(--primary);
-            background: rgba(99, 102, 241, 0.05);
+        .stat-card h4 { color: var(--primary); font-size: 1.7rem; }
+        .stat-card span { font-size: 0.75rem; text-transform: uppercase; color: #fff; font-weight: 600; }
+
+        /* Resume Sections */
+        .section-title { text-align: center; margin: 6rem 0 3rem; font-size: 2.2rem; font-weight: 700; }
+
+        .resume-container {
+            background: var(--card); border: 1px solid var(--border);
+            border-radius: 32px; padding: 3.5rem; margin-top: 2rem;
         }
 
-        .stat-card h4 {
-            color: var(--primary);
-            font-size: 1.7rem;
-            margin-bottom: 0.2rem;
+        .resume-grid { display: grid; grid-template-columns: 300px 1fr; gap: 4rem; }
+
+        .experience-item { margin-bottom: 3.5rem; padding-left: 2rem; border-left: 2px solid var(--primary); position: relative; }
+
+        .experience-item::before {
+            content: ''; position: absolute; left: -6px; top: 0;
+            width: 10px; height: 10px; background: var(--primary); border-radius: 50%;
         }
 
-        .stat-card span {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #fff;
-            font-weight: 600;
+        .job-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; margin-bottom: 0.5rem; }
+        .job-title { color: #fff; font-weight: 700; font-size: 1.3rem; }
+        .job-date { color: var(--primary); font-weight: 600; font-size: 0.9rem; }
+        .job-company { color: #818cf8; font-weight: 600; margin-bottom: 1rem; display: block; }
+
+        .achievement-list { list-style: none; color: var(--text-muted); font-size: 0.95rem; }
+        .achievement-list li { margin-bottom: 0.8rem; position: relative; padding-left: 1.2rem; }
+        .achievement-list li::before { content: "•"; color: var(--primary); position: absolute; left: 0; font-weight: bold; }
+
+        .tech-tag {
+            display: inline-block; background: rgba(99, 102, 241, 0.1);
+            color: #818cf8; padding: 5px 12px; border-radius: 8px;
+            font-size: 0.8rem; margin: 0 5px 10px 0; border: 1px solid rgba(99, 102, 241, 0.2);
         }
 
-        /* Projects Section */
-        .section-title {
-            text-align: center;
-            margin: 6rem 0 3rem;
-            font-size: 2.2rem;
-            font-weight: 700;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 2.5rem;
-            padding-bottom: 8rem;
-        }
-
-        .card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            cursor: pointer;
-        }
-
-        .card:hover {
-            transform: translateY(-12px);
-            border-color: var(--primary);
-            box-shadow: 0 20px 40px -10px var(--primary-glow);
-        }
-
-        .card img {
-            width: 100%;
-            height: 240px;
-            object-fit: cover;
-            filter: brightness(0.85);
-            transition: 0.4s;
-        }
-
-        .card:hover img {
-            filter: brightness(1.05);
-        }
-
-        .card-content {
-            padding: 1.8rem;
-        }
+        /* Projects */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 2.5rem; padding-bottom: 6rem; }
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: 24px; overflow: hidden; cursor: pointer; transition: 0.4s; }
+        .card:hover { transform: translateY(-10px); border-color: var(--primary); }
+        .card img { width: 100%; height: 220px; object-fit: cover; }
+        .card-content { padding: 1.5rem; }
 
         /* Modal */
-        .modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(3, 7, 18, 0.96);
-            backdrop-filter: blur(20px);
-            display: none;
-            z-index: 100;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .modal-content {
-            background: #0f172a;
-            width: 100%;
-            max-width: 900px;
-            max-height: 90vh;
-            border-radius: 32px;
-            border: 1px solid var(--border);
-            overflow-y: auto;
-            position: relative;
-            animation: slideUp 0.4s ease-out;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .modal-body {
-            padding: 3.5rem;
-        }
+        .modal { position: fixed; inset: 0; background: rgba(3, 7, 18, 0.98); display: none; z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
+        .modal-content { background: #0f172a; width: 100%; max-width: 800px; max-height: 90vh; border-radius: 24px; overflow-y: auto; border: 1px solid var(--border); }
 
         .btn-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 2rem;
-            padding: 1rem 2.5rem;
-            background: var(--primary);
-            color: white;
-            text-decoration: none;
-            border-radius: 14px;
-            font-weight: 600;
-            transition: 0.3s;
+            display: inline-flex; padding: 0.8rem 2rem; background: var(--primary);
+            color: white; text-decoration: none; border-radius: 12px; font-weight: 600;
         }
 
-        .btn-link:hover {
-            background: #4f46e5;
-            box-shadow: 0 10px 20px -5px var(--primary-glow);
-            transform: translateY(-2px);
-        }
-
-        @media (max-width: 850px) {
-            .about-grid { grid-template-columns: 1fr; gap: 3rem; }
-            .hero { padding-top: 4rem; }
-            .modal-body { padding: 2rem; }
-        }
+        @media (max-width: 900px) { .about-grid, .resume-grid { grid-template-columns: 1fr; } .resume-container { padding: 2rem; } }
     </style>
 </head>
 <body>
 
     <section class="hero">
         <div class="container">
-            <img src="https://media.licdn.com/dms/image/v2/D5603AQE1EDjdiid1ew/profile-displayphoto-crop_800_800/B56Zk3.FK_KAAI-/0/1757580647419?e=1770854400&v=beta&t=n-8HGgo9Ivmj-j0CTtlbRx2Moko3AXvYC3jFGlfiHNU" 
-                 alt="Muhammad Hafiz Harun" 
-                 class="profile-img"
-                 onerror="this.src='https://ui-avatars.com/api/?name=Muhammad+Hafiz&background=6366f1&color=fff&size=200'">
-            
+            <img src="https://media.licdn.com/dms/image/v2/D5603AQE1EDjdiid1ew/profile-displayphoto-crop_800_800/B56Zk3.FK_KAAI-/0/1757580647419?e=1770854400&v=beta&t=n-8HGgo9Ivmj-j0CTtlbRx2Moko3AXvYC3jFGlfiHNU" class="profile-img">
             <div class="profile-header">
                 <h1>Muhammad Hafiz Harun</h1>
-                <p style="font-size: 1.3rem; color: var(--primary); font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;">
-                    Solutions Architect • IT Infrastructure • ISO Internal Auditor
+                <p style="color: var(--primary); font-weight: 600; letter-spacing: 2px; text-transform: uppercase;">
+                    GTS Specialist • Solutions Architect • ISO Auditor
                 </p>
             </div>
 
             <div class="about-grid">
                 <div class="about-text">
-                    <p>
-                        With <strong>over 18 years</strong> of expertise in programming and IT infrastructure management, I specialize in engineering high-performance systems and optimizing digital landscapes.
-                    </p>
-                    <p>
-                        My background as an <strong>Internal Auditor for ISO Standards</strong> (Quality, Environmental, Health & Safety) ensures that every solution I architect is grounded in compliance, reliability, and precision.
-                    </p>
-                    <p>
-                        I actively integrate <strong>AI-driven methodologies</strong> to streamline development cycles and enhance decision-making accuracy, combining seasoned experience with modern innovation.
-                    </p>
-                    <a href="https://www.linkedin.com/in/muhammad-hafiz-harun-18180323/" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: 600; border-bottom: 1px solid var(--primary);">Connect on LinkedIn &rarr;</a>
+                    <p style="margin-bottom: 1.5rem;">With <strong>over 18 years</strong> of expertise, I engineer high-performance IT infrastructure and digital solutions.</p>
+                    <p style="margin-bottom: 2rem;">As an <strong>ISO Internal Auditor</strong>, I ensure every system meets peak standards for Quality, Environment, and Health & Safety.</p>
+                    <div style="display: flex; gap: 15px;">
+                        <a href="#resume" class="btn-link">View Full Career</a>
+                        <a href="https://www.linkedin.com/in/muhammad-hafiz-harun-18180323/" target="_blank" class="btn-link" style="background: transparent; border: 1px solid var(--primary);">LinkedIn</a>
+                    </div>
                 </div>
-
                 <div class="stats-grid">
-                    <div class="stat-card">
-                        <h4>18+</h4>
-                        <span>Years XP</span>
-                    </div>
-                    <div class="stat-card">
-                        <h4>ISO</h4>
-                        <span>Auditor</span>
-                    </div>
-                    <div class="stat-card">
-                        <h4>AI</h4>
-                        <span>Optimized</span>
-                    </div>
-                    <div class="stat-card">
-                        <h4>Systems</h4>
-                        <span>Architect</span>
-                    </div>
+                    <div class="stat-card"><h4>18+</h4><span>Years XP</span></div>
+                    <div class="stat-card"><h4>ISO</h4><span>Auditor</span></div>
+                    <div class="stat-card"><h4>OT</h4><span>Security</span></div>
+                    <div class="stat-card"><h4>System</h4><span>Architect</span></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <div class="container">
+    <div class="container" id="resume">
+        <h2 class="section-title">Professional Experience</h2>
+        <div class="resume-container">
+            <div class="resume-grid">
+                <aside>
+                    <h3 style="margin-bottom: 1.5rem;">Technical Expertise</h3>
+                    <div style="margin-bottom: 3rem;">
+                        <span class="tech-tag">Armis OT Security</span>
+                        <span class="tech-tag">ServiceNow</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">.NET Framework</span>
+                        <span class="tech-tag">GCP / Azure</span>
+                        <span class="tech-tag">AI Integration</span>
+                        <span class="tech-tag">Zero-Trust</span>
+                        <span class="tech-tag">SQL Server</span>
+                    </div>
+
+                    <h3 style="margin-bottom: 1rem;">Education</h3>
+                    <p style="color: #fff; font-weight: 600; font-size: 1rem;">Bachelor's in IT</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">International Islamic University Malaysia</p>
+                    <p style="color: var(--primary); font-size: 0.85rem; font-weight: 600;">System Development • 2007</p>
+                </aside>
+
+                <main>
+                    <div class="experience-item">
+                        <div class="job-header">
+                            <span class="job-title">GTS Specialist</span>
+                            <span class="job-date">2020 – Present</span>
+                        </div>
+                        <span class="job-company">Avery Dennison Smartrac</span>
+                        <ul class="achievement-list">
+                            <li>Maintain and troubleshoot site IT infrastructure, hardware, and networks.</li>
+                            <li>Lead projects focused on infrastructure service improvement and high ROI.</li>
+                            <li>Provide technical training and support to end-users and management.</li>
+                            <li>Manage ITIL-related processes including incident, change, and asset management.</li>
+                        </ul>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="job-header">
+                            <span class="job-title">Staff Engineer - Systems Innovation</span>
+                            <span class="job-date">2017 – 2020</span>
+                        </div>
+                        <span class="job-company">Avery Dennison Smartrac</span>
+                        <ul class="achievement-list">
+                            <li>Led creation and deployment of eSystems for operational efficiency.</li>
+                            <li>Automated business processes including travel, training, and maintenance scheduling.</li>
+                            <li>Integrated tracking data across systems for real-time visibility.</li>
+                            <li>Developed proactive maintenance systems to minimize downtime.</li>
+                        </ul>
+                    </div>
+
+                    <div class="experience-item">
+                        <div class="job-header">
+                            <span class="job-title">Senior Analyst Programmer</span>
+                            <span class="job-date">2010 – 2017</span>
+                        </div>
+                        <span class="job-company">Avery Dennison Smartrac</span>
+                        <ul class="achievement-list">
+                            <li>Led complex software projects focused on scalability and performance.</li>
+                            <li>Established coding best practices and mentored junior developers.</li>
+                        </ul>
+                    </div>
+
+                    <div class="experience-item" style="border: none;">
+                        <div class="job-header">
+                            <span class="job-title">Analyst Programmer</span>
+                            <span class="job-date">2007 – 2010</span>
+                        </div>
+                        <span class="job-company">Al Madinah International University</span>
+                        <ul class="achievement-list">
+                            <li>Developed comprehensive Campus Management Systems.</li>
+                            <li>Managed full-cycle development from requirements to deployment.</li>
+                        </ul>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="projects">
         <h2 class="section-title">Selected Projects</h2>
         <div id="grid" class="grid"></div>
     </div>
 
     <div id="modal" class="modal" onclick="if(event.target==this) closeModal()">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()" style="position: absolute; right: 25px; top: 20px; font-size: 2.5rem; cursor: pointer; color: #fff; z-index: 10;">&times;</span>
-            <img id="mImg" src="" style="width:100%; max-height:450px; object-fit:cover; border-bottom: 1px solid var(--border);">
-            <div class="modal-body">
-                <h1 id="mTitle" style="margin-bottom: 1.5rem; font-size: 2.5rem; color: #fff;"></h1>
-                <div id="mDesc" style="font-size: 1.1rem; color: #cbd5e1; line-height: 1.8;"></div>
+            <span onclick="closeModal()" style="float:right; padding: 20px; cursor:pointer; font-size: 2rem; color: #fff;">&times;</span>
+            <img id="mImg" src="" style="width:100%; height:350px; object-fit:cover;">
+            <div style="padding: 2.5rem;">
+                <h2 id="mTitle" style="color: #fff; margin-bottom: 1rem;"></h2>
+                <div id="mDesc" style="color: var(--text-muted); line-height: 1.8; margin-bottom: 2rem;"></div>
                 <a id="mLink" href="#" target="_blank" class="btn-link">Explore Live Solution</a>
             </div>
         </div>
@@ -301,53 +249,33 @@
         let projects = [];
 
         async function load() {
-            const { data, error } = await supabaseClient
-                .from('projects')
-                .select('*')
-                .order('created_at', { ascending: false });
-
+            const { data, error } = await supabaseClient.from('projects').select('*').order('created_at', { ascending: false });
             if (error) return;
             projects = data;
-            
-            const ts = Date.now();
             document.getElementById('grid').innerHTML = data.map((p, i) => `
-                    <div class="card" onclick="openModal(${i})">
-                        <img src="${p.image_url || ''}?t=${ts}">
-                        <div class="card-content">
-                            <h3 style="color: #fff; margin-bottom: 0.5rem;">${p.title}</h3>
-                            <p style="color: var(--primary); font-size: 0.9rem; font-weight: 600;">
-                                ${p.url ? 'Details &rarr;' : '<span style="color:#f87171;">Internal System</span>'}
-                            </p>
-                        </div>
+                <div class="card" onclick="openModal(${i})">
+                    <img src="${p.image_url || ''}">
+                    <div class="card-content">
+                        <h3 style="color: #fff; margin-bottom: 0.5rem;">${p.title}</h3>
+                        <p style="color: var(--primary); font-size: 0.85rem; font-weight: 600;">${p.url ? 'View Case Study &rarr;' : 'Internal System'}</p>
                     </div>
-                `).join('');
+                </div>
+            `).join('');
         }
 
         function openModal(i) {
             const p = projects[i];
             document.getElementById('mTitle').innerText = p.title;
-            document.getElementById('mImg').src = p.image_url ? `${p.image_url}?t=${Date.now()}` : '';
+            document.getElementById('mImg').src = p.image_url;
             document.getElementById('mDesc').innerHTML = p.description;
-
             const link = document.getElementById('mLink');
-            if (p.url && p.url.trim() !== "") {
-                link.href = p.url;
-                link.style.display = 'inline-flex';
-            } else {
-                link.style.display = 'none';
-            }
-
+            if (p.url) { link.href = p.url; link.style.display = 'inline-flex'; } else { link.style.display = 'none'; }
             document.getElementById('modal').style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
 
-        function closeModal() {
-            document.getElementById('modal').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
+        function closeModal() { document.getElementById('modal').style.display = 'none'; document.body.style.overflow = 'auto'; }
         load();
     </script>
 </body>
-
 </html>
