@@ -28,8 +28,9 @@
       width:100%;
       height:100%;
       object-fit:cover;
-      object-position:center top;
+      object-position:center center;
       display:block;
+      min-height:400px;
     }
     .poster-overlay{position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(0deg,rgba(13,46,26,1) 0%,transparent 100%)}
     .poster-badge{position:absolute;top:16px;right:16px;background:rgba(23,63,45,.85);border:1px solid rgba(214,180,104,.5);color:#f1dfad;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;padding:6px 14px;border-radius:999px;backdrop-filter:blur(4px)}
@@ -71,12 +72,18 @@
 
     .footer{text-align:center;padding:12px;background:#0d2e1a;color:rgba(241,223,173,.45);font-size:.82rem;letter-spacing:.06em}
 
-    /* ── MOBILE: stack vertically ── */
+    /* ── MOBILE: stack vertically, full poster ── */
     @media(max-width:680px){
       body{padding:10px}
       .main-grid{grid-template-columns:1fr}
-      .poster-col{max-height:420px}
-      .poster-col img{object-fit:cover;height:420px}
+      .poster-col{height:auto;min-height:unset}
+      .poster-col img{
+        width:100%;
+        height:auto;
+        object-fit:unset;
+        object-position:unset;
+        display:block;
+      }
       .details-col{padding:16px}
       .countdown{grid-template-columns:repeat(2,1fr)}
       .cbox strong{font-size:2rem}
