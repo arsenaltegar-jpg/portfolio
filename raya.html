@@ -183,8 +183,8 @@
                   📆 Simpan ke Kalendar
                 </button>
                 <div class="cal-dropdown" id="calDropdown">
-                <a class="cal-option" id="androidCalBtn" href="#">
-  <span>📱</span> Android Kalendar
+         <a class="cal-option" id="googleCalBtn" href="#" target="_blank" rel="noopener">
+  <span>🗓️</span> Google Calendar
 </a>
                   <a class="cal-option" id="icalBtn" href="#" download="jemputan-raya-hafiz-hafizah.ics">
                     <span>🍎</span> Apple / Outlook Kalendar (.ics)
@@ -229,16 +229,13 @@
 
 
     /* Android Calendar intent */
-document.getElementById('androidCalBtn').href =
-  'intent:#Intent' +
-  ';action=android.intent.action.INSERT' +
-  ';type=vnd.android.cursor.dir/event' +
-  ';S.title=' + encodeURIComponent(calTitle) +
-  ';S.description=' + encodeURIComponent(calDetails) +
-  ';S.eventLocation=' + encodeURIComponent(calLoc) +
-  ';l.beginTime=1744344000000' +   /* 11 Apr 2026 14:00 MYT in ms */
-  ';l.endTime=1744358400000' +     /* 11 Apr 2026 18:00 MYT in ms */
-  ';end';
+/* Google Calendar link */
+document.getElementById('googleCalBtn').href =
+  'https://calendar.google.com/calendar/render?action=TEMPLATE' +
+  '&text=' + encodeURIComponent(calTitle) +
+  '&dates=' + calStart + '/' + calEnd +
+  '&details=' + encodeURIComponent(calDetails) +
+  '&location=' + encodeURIComponent(calLoc);
 
     /* .ics download */
     function buildICS() {
