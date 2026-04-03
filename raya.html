@@ -56,10 +56,25 @@
 
     /* ── BUTTONS ── */
     .btns{display:grid;gap:10px;margin-top:14px}
-    .btn{display:block;text-decoration:none;text-align:center;padding:13px 16px;border-radius:14px;font-size:.95rem;font-weight:700;transition:transform .15s,opacity .15s}
+    .btn{display:block;text-decoration:none;text-align:center;padding:13px 16px;border-radius:14px;font-size:.95rem;font-weight:700;transition:transform .15s,opacity .15s;cursor:pointer;border:none;width:100%}
     .btn:hover{transform:translateY(-2px);opacity:.93}
     .btn-map{background:linear-gradient(160deg,#29553f,#173f2d);color:#f1dfad;box-shadow:0 6px 20px rgba(23,63,45,.35)}
     .btn-wa{background:linear-gradient(160deg,#f1dfad,#d6b468);color:#2a1e08;box-shadow:0 6px 20px rgba(180,148,80,.3)}
+    .btn-cal{background:linear-gradient(160deg,#3a2060,#5c3490);color:#e8d8ff;box-shadow:0 6px 20px rgba(60,30,100,.35)}
+
+    /* ── CALENDAR DROPDOWN ── */
+    .cal-wrap{position:relative}
+    .cal-dropdown{display:none;position:absolute;bottom:calc(100% + 8px);left:0;right:0;background:#fff;border:1px solid rgba(180,148,80,.3);border-radius:14px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.15);z-index:10}
+    .cal-dropdown.open{display:block}
+    .cal-option{display:flex;align-items:center;gap:10px;padding:12px 16px;font-size:.92rem;font-weight:600;color:#2a2010;text-decoration:none;transition:background .15s}
+    .cal-option:hover{background:rgba(214,180,104,.15)}
+    .cal-option span{font-size:1.1rem}
+
+    /* ── POSTER IMAGE ── */
+    .poster-wrap{position:relative;overflow:hidden;max-height:420px}
+    .poster-wrap img{width:100%;height:420px;object-fit:cover;display:block}
+    .poster-overlay{position:absolute;bottom:0;left:0;right:0;height:120px;background:linear-gradient(0deg,#f5ecd5 0%,transparent 100%)}
+    .poster-badge{position:absolute;top:16px;right:16px;background:rgba(23,63,45,.85);border:1px solid rgba(214,180,104,.5);color:#f1dfad;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;padding:6px 14px;border-radius:999px;backdrop-filter:blur(4px)}
 
     /* ── MOTIF STRIP ── */
     .motif-strip{text-align:center;padding:14px 20px 6px;background:#173f2d}
@@ -160,6 +175,13 @@
         </div>
       </div>
 
+      <!-- ── POSTER IMAGE ── -->
+      <div class="poster-wrap">
+        <img src="1000588512.png" alt="Poster Raya Hafiz & Hafizah" onerror="this.parentElement.style.display='none'">
+        <div class="poster-overlay"></div>
+        <div class="poster-badge">✦ Rumah Terbuka 2026 ✦</div>
+      </div>
+
       <!-- ── BODY ── -->
       <div class="body">
         <div class="grid">
@@ -240,6 +262,21 @@
                  target="_blank" rel="noopener">
                 💬 WhatsApp Tuan Rumah
               </a>
+
+              <!-- Add to Calendar -->
+              <div class="cal-wrap">
+                <button class="btn btn-cal" onclick="toggleCal(event)">
+                  📆 Simpan ke Kalendar
+                </button>
+                <div class="cal-dropdown" id="calDropdown">
+                  <a class="cal-option" id="googleCalBtn" href="#" target="_blank" rel="noopener">
+                    <span>🗓️</span> Google Calendar
+                  </a>
+                  <a class="cal-option" id="icalBtn" href="#" download="jemputan-raya-hafiz-hafizah.ics">
+                    <span>🍎</span> Apple / Outlook Calendar (.ics)
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -278,6 +315,52 @@
 
     updateCountdown();
     setInterval(updateCountdown, 1000);
+
+    /* ── Calendar ── */
+    const calTitle   = 'Rumah Terbuka Aidilfitri - Hafiz & Hafizah';
+    const calDetails = 'Jemputan Rumah Terbuka Aidilfitri Hafiz & Hafizah. Semua dijemput hadir!';
+    const calLoc     = 'No 39, Lorong Seri Putera 4, Taman Seri Putera, 14300 Nibong Tebal';
+    const calStart   = '20260411T060000Z';  /* 14:00 MYT = 06:00 UTC */
+    const calEnd     = '20260411T120000Z';  /* 20:00 MYT = 12:00 UTC */
+
+    /* Google Calendar link */
+    document.getElementById('googleCalBtn').href =
+      'https://calendar.google.com/calendar/render?action=TEMPLATE' +
+      '&text=' + encodeURIComponent(calTitle) +
+      '&dates=' + calStart + '/' + calEnd +
+      '&details=' + encodeURIComponent(calDetails) +
+      '&location=' + encodeURIComponent(calLoc);
+
+    /* .ics download */
+    function buildICS() {
+      const ics = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//Hafiz & Hafizah//Raya 2026//EN',
+        'BEGIN:VEVENT',
+        'UID:raya2026-hafiz-hafizah@invite',
+        'DTSTAMP:' + calStart,
+        'DTSTART:' + calStart,
+        'DTEND:'   + calEnd,
+        'SUMMARY:' + calTitle,
+        'DESCRIPTION:' + calDetails,
+        'LOCATION:' + calLoc,
+        'END:VEVENT',
+        'END:VCALENDAR'
+      ].join('\r\n');
+      const blob = new Blob([ics], {type: 'text/calendar'});
+      document.getElementById('icalBtn').href = URL.createObjectURL(blob);
+    }
+    buildICS();
+
+    /* Toggle dropdown */
+    function toggleCal(e) {
+      e.stopPropagation();
+      document.getElementById('calDropdown').classList.toggle('open');
+    }
+    document.addEventListener('click', function() {
+      document.getElementById('calDropdown').classList.remove('open');
+    });
   </script>
 
 </body>
