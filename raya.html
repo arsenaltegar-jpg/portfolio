@@ -10,7 +10,6 @@
     body{font-family:'Lato',Georgia,sans-serif;background:linear-gradient(160deg,#0d2e1a 0%,#1a4a2a 40%,#0a2015 100%);min-height:100vh;padding:20px;position:relative;overflow-x:hidden}
     body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle at 20% 20%,rgba(214,180,104,.08) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(214,180,104,.06) 0%,transparent 50%);pointer-events:none;z-index:0}
 
-    /* Ketupat pattern overlay */
     .pattern-overlay{position:fixed;inset:0;opacity:.07;pointer-events:none;z-index:0}
 
     .raya-wrap{max-width:920px;margin:0 auto;position:relative;z-index:1}
@@ -19,26 +18,44 @@
 
     /* ── BODY ── */
     .body{background:linear-gradient(180deg,#f5ecd5 0%,#ede0c0 100%);padding:32px}
-    .grid{display:grid;grid-template-columns:1.3fr .7fr;gap:20px}
-    .panel{background:rgba(255,255,255,.6);border:1px solid rgba(180,148,80,.3);border-radius:22px;padding:24px;backdrop-filter:blur(2px)}
-    .panel-title{font-family:'Playfair Display',serif;font-size:1.2rem;color:#173f2d;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+
+    /* ── DESKTOP LAYOUT: poster left, details right ── */
+    .main-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;align-items:stretch}
+
+    /* Poster column */
+    .poster-col{position:relative;overflow:hidden;background:#0d2e1a;min-height:0}
+    .poster-col img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center top;
+      display:block;
+    }
+    .poster-overlay{position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(0deg,rgba(13,46,26,1) 0%,transparent 100%)}
+    .poster-badge{position:absolute;top:16px;right:16px;background:rgba(23,63,45,.85);border:1px solid rgba(214,180,104,.5);color:#f1dfad;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;padding:6px 14px;border-radius:999px;backdrop-filter:blur(4px)}
+
+    /* Details column */
+    .details-col{background:linear-gradient(180deg,#f5ecd5 0%,#ede0c0 100%);padding:28px;display:flex;flex-direction:column;gap:16px}
+
+    .panel{background:rgba(255,255,255,.6);border:1px solid rgba(180,148,80,.3);border-radius:22px;padding:22px;backdrop-filter:blur(2px)}
+    .panel-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:#173f2d;margin-bottom:16px;display:flex;align-items:center;gap:10px}
     .panel-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(180,148,80,.4),transparent)}
-    .detail-item{display:grid;grid-template-columns:48px 1fr;gap:12px;align-items:start;margin-bottom:16px}
-    .icon-box{width:48px;height:48px;border-radius:14px;background:linear-gradient(160deg,#29553f,#173f2d);display:flex;align-items:center;justify-content:center;font-size:1.3rem;box-shadow:0 4px 12px rgba(23,63,45,.3)}
-    .lbl{font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;color:#8a6e40;margin-bottom:3px}
-    .val{font-size:1.05rem;font-weight:700;color:#2a2010;line-height:1.4}
-    .note-box{margin-top:16px;padding:16px 18px;background:linear-gradient(135deg,rgba(23,63,45,.08),rgba(214,180,104,.12));border-left:3px solid #c9a84c;border-radius:0 12px 12px 0;font-size:1rem;color:#3a2e18;line-height:1.65}
-    .closing{margin-top:18px;text-align:center;font-family:'Playfair Display',serif;font-size:clamp(1.2rem,3vw,1.7rem);color:#29553f;font-style:italic;line-height:1.4}
+    .detail-item{display:grid;grid-template-columns:44px 1fr;gap:10px;align-items:start;margin-bottom:14px}
+    .icon-box{width:44px;height:44px;border-radius:12px;background:linear-gradient(160deg,#29553f,#173f2d);display:flex;align-items:center;justify-content:center;font-size:1.2rem;box-shadow:0 4px 12px rgba(23,63,45,.3)}
+    .lbl{font-size:.75rem;text-transform:uppercase;letter-spacing:.1em;color:#8a6e40;margin-bottom:2px}
+    .val{font-size:.98rem;font-weight:700;color:#2a2010;line-height:1.4}
+    .note-box{padding:14px 16px;background:linear-gradient(135deg,rgba(23,63,45,.08),rgba(214,180,104,.12));border-left:3px solid #c9a84c;border-radius:0 12px 12px 0;font-size:.95rem;color:#3a2e18;line-height:1.65}
+    .closing{text-align:center;font-family:'Playfair Display',serif;font-size:clamp(1rem,2.5vw,1.4rem);color:#29553f;font-style:italic;line-height:1.4}
 
     /* ── COUNTDOWN ── */
-    .countdown{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:10px 0 16px}
-    .cbox{text-align:center;padding:14px 8px;border-radius:16px;background:linear-gradient(160deg,#1c4a31,#0d2e1a);border:1px solid rgba(214,180,104,.25)}
-    .cbox strong{display:block;font-size:2rem;color:#f1dfad;line-height:1;font-family:'Playfair Display',serif}
-    .cbox span{font-size:.78rem;color:rgba(241,223,173,.6);letter-spacing:.08em;text-transform:uppercase}
+    .countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:8px 0 14px}
+    .cbox{text-align:center;padding:12px 6px;border-radius:14px;background:linear-gradient(160deg,#1c4a31,#0d2e1a);border:1px solid rgba(214,180,104,.25)}
+    .cbox strong{display:block;font-size:1.6rem;color:#f1dfad;line-height:1;font-family:'Playfair Display',serif}
+    .cbox span{font-size:.7rem;color:rgba(241,223,173,.6);letter-spacing:.08em;text-transform:uppercase}
 
     /* ── BUTTONS ── */
-    .btns{display:grid;gap:10px;margin-top:14px}
-    .btn{display:block;text-decoration:none;text-align:center;padding:13px 16px;border-radius:14px;font-size:.95rem;font-weight:700;transition:transform .15s,opacity .15s;cursor:pointer;border:none;width:100%}
+    .btns{display:grid;gap:9px}
+    .btn{display:block;text-decoration:none;text-align:center;padding:12px 14px;border-radius:13px;font-size:.9rem;font-weight:700;transition:transform .15s,opacity .15s;cursor:pointer;border:none;width:100%}
     .btn:hover{transform:translateY(-2px);opacity:.93}
     .btn-map{background:linear-gradient(160deg,#29553f,#173f2d);color:#f1dfad;box-shadow:0 6px 20px rgba(23,63,45,.35)}
     .btn-wa{background:linear-gradient(160deg,#f1dfad,#d6b468);color:#2a1e08;box-shadow:0 6px 20px rgba(180,148,80,.3)}
@@ -48,32 +65,26 @@
     .cal-wrap{position:relative}
     .cal-dropdown{display:none;position:absolute;bottom:calc(100% + 8px);left:0;right:0;background:#fff;border:1px solid rgba(180,148,80,.3);border-radius:14px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.15);z-index:10}
     .cal-dropdown.open{display:block}
-    .cal-option{display:flex;align-items:center;gap:10px;padding:12px 16px;font-size:.92rem;font-weight:600;color:#2a2010;text-decoration:none;transition:background .15s}
+    .cal-option{display:flex;align-items:center;gap:10px;padding:12px 16px;font-size:.9rem;font-weight:600;color:#2a2010;text-decoration:none;transition:background .15s}
     .cal-option:hover{background:rgba(214,180,104,.15)}
     .cal-option span{font-size:1.1rem}
 
-    /* ── POSTER IMAGE ── */
-    .poster-wrap{position:relative;overflow:hidden}
-    .poster-wrap img{width:100%;height:auto;display:block;max-height:600px;object-fit:cover}
-    .poster-overlay{position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(0deg,#f5ecd5 0%,transparent 100%)}
-    .poster-badge{position:absolute;top:16px;right:16px;background:rgba(23,63,45,.85);border:1px solid rgba(214,180,104,.5);color:#f1dfad;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;padding:6px 14px;border-radius:999px;backdrop-filter:blur(4px)}
-
-    /* ── MOTIF STRIP ── */
-    .motif-strip{text-align:center;padding:14px 20px 6px;background:#173f2d}
     .footer{text-align:center;padding:12px;background:#0d2e1a;color:rgba(241,223,173,.45);font-size:.82rem;letter-spacing:.06em}
 
+    /* ── MOBILE: stack vertically ── */
     @media(max-width:680px){
-      body{padding:12px}
-      .hero{padding:44px 20px 40px}
-      .body{padding:18px}
-      .grid{grid-template-columns:1fr}
-      .deco-left,.deco-right{display:none}
+      body{padding:10px}
+      .main-grid{grid-template-columns:1fr}
+      .poster-col{max-height:420px}
+      .poster-col img{object-fit:cover;height:420px}
+      .details-col{padding:16px}
+      .countdown{grid-template-columns:repeat(2,1fr)}
+      .cbox strong{font-size:2rem}
     }
   </style>
 </head>
 <body>
 
-  <!-- Ketupat background pattern -->
   <div class="pattern-overlay">
     <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -89,18 +100,19 @@
   <div class="raya-wrap">
     <div class="card">
 
-      <!-- ── POSTER IMAGE ── -->
-      <div class="poster-wrap">
-        <img src="1000588512.png" alt="Poster Raya Hafiz & Hafizah" onerror="this.parentElement.style.display='none'">
-        <div class="poster-overlay"></div>
-        <div class="poster-badge"></div>
-      </div>
+      <!-- ── SIDE-BY-SIDE LAYOUT ── -->
+      <div class="main-grid">
 
-      <!-- ── BODY ── -->
-      <div class="body">
-        <div class="grid">
+        <!-- LEFT: Poster -->
+        <div class="poster-col">
+          <img src="1000588512.png" alt="Poster Raya Hafiz & Hafizah" onerror="this.parentElement.style.background:'#1a4a2a'">
+          <div class="poster-overlay"></div>
+        </div>
 
-          <!-- Left panel: details -->
+        <!-- RIGHT: Details -->
+        <div class="details-col">
+
+          <!-- Event details panel -->
           <div class="panel">
             <div class="panel-title">Butiran Majlis</div>
 
@@ -116,7 +128,7 @@
               <div class="icon-box">🕑</div>
               <div>
                 <div class="lbl">Masa</div>
-                <div class="val">2:00 - 6:00 Petang</div>
+                <div class="val">2:00 – 6:00 Petang</div>
               </div>
             </div>
 
@@ -128,7 +140,7 @@
                   No 39, Lorong Seri Putera 4,<br>
                   Taman Seri Putera,<br>
                   14300 Nibong Tebal<br>
-                  <span style="color:#8a6e40;font-weight:400;font-size:.92rem">(Depan Surau)</span>
+                  <span style="color:#8a6e40;font-weight:400;font-size:.88rem">(Depan Surau)</span>
                 </div>
               </div>
             </div>
@@ -136,17 +148,11 @@
             <div class="note-box">
               Diharap dengan kehadiran <strong>Cik / Tuan / Puan</strong> dapat memeriahkan majlis kami. 🌙
             </div>
-
-            <div class="closing">
-              Salam Aidilfitri buat semua.<br>
-              Maaf Zahir &amp; Batin 🌿
-            </div>
           </div>
 
-          <!-- Right panel: countdown + buttons -->
+          <!-- Countdown panel -->
           <div class="panel">
             <div class="panel-title">Countdown Majlis</div>
-
             <div class="countdown">
               <div class="cbox"><strong id="days">—</strong><span>Hari</span></div>
               <div class="cbox"><strong id="hours">—</strong><span>Jam</span></div>
@@ -154,9 +160,8 @@
               <div class="cbox"><strong id="seconds">—</strong><span>Saat</span></div>
             </div>
 
-            <!-- Ketupat decorative row -->
-            <div style="text-align:center;margin:14px 0 10px;opacity:.55">
-              <svg width="180" height="30" viewBox="0 0 180 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <div style="text-align:center;margin:6px 0 12px;opacity:.5">
+              <svg width="160" height="26" viewBox="0 0 180 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <polygon points="15,1 29,15 15,29 1,15" fill="none" stroke="#b8963c" stroke-width="1.2"/>
                 <polygon points="50,1 64,15 50,29 36,15" fill="none" stroke="#b8963c" stroke-width="1.2"/>
                 <polygon points="90,1 104,15 90,29 76,15" fill="#b8963c" fill-opacity=".3" stroke="#b8963c" stroke-width="1.2"/>
@@ -176,29 +181,29 @@
                  target="_blank" rel="noopener">
                 💬 WhatsApp Tuan Rumah
               </a>
-
-              <!-- Add to Calendar -->
               <div class="cal-wrap">
                 <button class="btn btn-cal" onclick="toggleCal(event)">
                   📆 Simpan ke Kalendar
                 </button>
                 <div class="cal-dropdown" id="calDropdown">
-         <a class="cal-option" id="googleCalBtn" href="#" target="_blank" rel="noopener">
-  <span>🗓️</span> Google Calendar
-</a>
+                  <a class="cal-option" id="googleCalBtn" href="#" target="_blank" rel="noopener">
+                    <span>🗓️</span> Google Calendar
+                  </a>
                   <a class="cal-option" id="icalBtn" href="#" download="jemputan-raya-hafiz-hafizah.ics">
-                    <span>🍎</span> Apple / Outlook Kalendar (.ics)
+                    <span>🍎</span> Apple / Outlook (.ics)
                   </a>
                 </div>
               </div>
             </div>
           </div>
 
+          <div class="closing">
+            Salam Aidilfitri buat semua.<br>
+            Maaf Zahir &amp; Batin 🌿
+          </div>
+
         </div>
       </div>
-
-      <!-- Motif strip -->
-  
 
       <div class="footer">e-Invite Rumah Terbuka Aidilfitri ✦ Hafiz &amp; Hafizah ✦ 2026</div>
 
@@ -207,7 +212,6 @@
 
   <script>
     const eventDate = new Date('2026-04-11T14:00:00+08:00');
-
     function updateCountdown() {
       let diff = eventDate - new Date();
       if (diff < 0) diff = 0;
@@ -216,50 +220,35 @@
       document.getElementById('minutes').textContent = Math.floor((diff / 60000) % 60);
       document.getElementById('seconds').textContent = Math.floor((diff / 1000) % 60);
     }
-
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
-    /* ── Calendar ── */
     const calTitle   = 'Rumah Terbuka Aidilfitri - Hafiz & Hafizah';
     const calDetails = 'Jemputan Rumah Terbuka Aidilfitri Hafiz & Hafizah. Semua dijemput hadir!';
     const calLoc     = 'No 39, Lorong Seri Putera 4, Taman Seri Putera, 14300 Nibong Tebal';
-    const calStart   = '20260411T060000Z';  /* 14:00 MYT = 06:00 UTC */
-    const calEnd     = '20260411T120000Z';  /* 20:00 MYT = 12:00 UTC */
+    const calStart   = '20260411T060000Z';
+    const calEnd     = '20260411T100000Z';
 
+    document.getElementById('googleCalBtn').href =
+      'https://calendar.google.com/calendar/render?action=TEMPLATE' +
+      '&text=' + encodeURIComponent(calTitle) +
+      '&dates=' + calStart + '/' + calEnd +
+      '&details=' + encodeURIComponent(calDetails) +
+      '&location=' + encodeURIComponent(calLoc);
 
-    /* Android Calendar intent */
-/* Google Calendar link */
-document.getElementById('googleCalBtn').href =
-  'https://calendar.google.com/calendar/render?action=TEMPLATE' +
-  '&text=' + encodeURIComponent(calTitle) +
-  '&dates=' + calStart + '/' + calEnd +
-  '&details=' + encodeURIComponent(calDetails) +
-  '&location=' + encodeURIComponent(calLoc);
-
-    /* .ics download */
     function buildICS() {
       const ics = [
-        'BEGIN:VCALENDAR',
-        'VERSION:2.0',
-        'PRODID:-//Hafiz & Hafizah//Raya 2026//EN',
-        'BEGIN:VEVENT',
-        'UID:raya2026-hafiz-hafizah@invite',
-        'DTSTAMP:' + calStart,
-        'DTSTART:' + calStart,
-        'DTEND:'   + calEnd,
-        'SUMMARY:' + calTitle,
-        'DESCRIPTION:' + calDetails,
-        'LOCATION:' + calLoc,
-        'END:VEVENT',
-        'END:VCALENDAR'
+        'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Hafiz & Hafizah//Raya 2026//EN',
+        'BEGIN:VEVENT','UID:raya2026-hafiz-hafizah@invite',
+        'DTSTAMP:'+calStart,'DTSTART:'+calStart,'DTEND:'+calEnd,
+        'SUMMARY:'+calTitle,'DESCRIPTION:'+calDetails,'LOCATION:'+calLoc,
+        'END:VEVENT','END:VCALENDAR'
       ].join('\r\n');
-      const blob = new Blob([ics], {type: 'text/calendar'});
+      const blob = new Blob([ics], {type:'text/calendar'});
       document.getElementById('icalBtn').href = URL.createObjectURL(blob);
     }
     buildICS();
 
-    /* Toggle dropdown */
     function toggleCal(e) {
       e.stopPropagation();
       document.getElementById('calDropdown').classList.toggle('open');
