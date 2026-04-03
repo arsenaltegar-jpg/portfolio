@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jemputan Rumah Terbuka Aidilfitri – Hafiz & Hafizah</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Lato',Georgia,sans-serif;background:linear-gradient(160deg,#0d2e1a 0%,#1a4a2a 40%,#0a2015 100%);min-height:100vh;padding:20px;position:relative;overflow-x:hidden}
+    body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(circle at 20% 20%,rgba(214,180,104,.08) 0%,transparent 50%),radial-gradient(circle at 80% 80%,rgba(214,180,104,.06) 0%,transparent 50%);pointer-events:none;z-index:0}
+
+    /* Ketupat pattern overlay */
+    .pattern-overlay{position:fixed;inset:0;opacity:.07;pointer-events:none;z-index:0}
+
+    .raya-wrap{max-width:920px;margin:0 auto;position:relative;z-index:1}
+
+    .card{overflow:hidden;border-radius:28px;border:1.5px solid rgba(214,180,104,.4);box-shadow:0 30px 80px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.1)}
+
+    /* ── HERO ── */
+    .hero{position:relative;background:linear-gradient(175deg,#0d3020 0%,#1c5535 50%,#0d2a1a 100%);padding:60px 40px 50px;text-align:center;overflow:hidden}
+    .hero-border{position:absolute;inset:16px;border:1.5px solid rgba(214,180,104,.5);border-radius:20px;pointer-events:none}
+    .hero-corner{position:absolute;width:40px;height:40px;border-color:rgba(241,223,173,.8);border-style:solid}
+    .hero-corner.tl{top:10px;left:10px;border-width:2px 0 0 2px;border-radius:4px 0 0 0}
+    .hero-corner.tr{top:10px;right:10px;border-width:2px 2px 0 0;border-radius:0 4px 0 0}
+    .hero-corner.bl{bottom:10px;left:10px;border-width:0 0 2px 2px;border-radius:0 0 0 4px}
+    .hero-corner.br{bottom:10px;right:10px;border-width:0 2px 2px 0;border-radius:0 0 4px 0}
+    .deco-left,.deco-right{position:absolute;top:50%;transform:translateY(-50%);opacity:.35}
+    .deco-left{left:30px}
+    .deco-right{right:30px}
+    .kicker{font-size:.85rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(241,223,173,.75);margin-bottom:14px;position:relative;z-index:2}
+    .hero h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,9vw,6rem);line-height:.9;color:#f1dfad;text-shadow:0 0 60px rgba(214,180,104,.4);position:relative;z-index:2}
+    .raya-arabic{font-family:'Playfair Display',serif;font-size:clamp(1.1rem,3vw,1.7rem);color:rgba(241,223,173,.7);font-style:italic;margin-top:10px;letter-spacing:.04em;position:relative;z-index:2}
+    .pelita-row{display:flex;justify-content:center;gap:28px;margin:22px 0 16px;align-items:flex-end;position:relative;z-index:2}
+    .tag{display:inline-block;padding:8px 24px;border-radius:999px;border:1px solid rgba(214,180,104,.5);background:rgba(214,180,104,.1);font-size:.95rem;letter-spacing:.08em;color:rgba(241,223,173,.85);position:relative;z-index:2}
+    .names{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,5vw,3rem);color:#fff2c5;margin-top:14px;line-height:1.15;font-weight:700;position:relative;z-index:2}
+
+    /* ── BODY ── */
+    .body{background:linear-gradient(180deg,#f5ecd5 0%,#ede0c0 100%);padding:32px}
+    .grid{display:grid;grid-template-columns:1.3fr .7fr;gap:20px}
+    .panel{background:rgba(255,255,255,.6);border:1px solid rgba(180,148,80,.3);border-radius:22px;padding:24px;backdrop-filter:blur(2px)}
+    .panel-title{font-family:'Playfair Display',serif;font-size:1.2rem;color:#173f2d;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+    .panel-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(180,148,80,.4),transparent)}
+    .detail-item{display:grid;grid-template-columns:48px 1fr;gap:12px;align-items:start;margin-bottom:16px}
+    .icon-box{width:48px;height:48px;border-radius:14px;background:linear-gradient(160deg,#29553f,#173f2d);display:flex;align-items:center;justify-content:center;font-size:1.3rem;box-shadow:0 4px 12px rgba(23,63,45,.3)}
+    .lbl{font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;color:#8a6e40;margin-bottom:3px}
+    .val{font-size:1.05rem;font-weight:700;color:#2a2010;line-height:1.4}
+    .note-box{margin-top:16px;padding:16px 18px;background:linear-gradient(135deg,rgba(23,63,45,.08),rgba(214,180,104,.12));border-left:3px solid #c9a84c;border-radius:0 12px 12px 0;font-size:1rem;color:#3a2e18;line-height:1.65}
+    .closing{margin-top:18px;text-align:center;font-family:'Playfair Display',serif;font-size:clamp(1.2rem,3vw,1.7rem);color:#29553f;font-style:italic;line-height:1.4}
+
+    /* ── COUNTDOWN ── */
+    .countdown{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:10px 0 16px}
+    .cbox{text-align:center;padding:14px 8px;border-radius:16px;background:linear-gradient(160deg,#1c4a31,#0d2e1a);border:1px solid rgba(214,180,104,.25)}
+    .cbox strong{display:block;font-size:2rem;color:#f1dfad;line-height:1;font-family:'Playfair Display',serif}
+    .cbox span{font-size:.78rem;color:rgba(241,223,173,.6);letter-spacing:.08em;text-transform:uppercase}
+
+    /* ── BUTTONS ── */
+    .btns{display:grid;gap:10px;margin-top:14px}
+    .btn{display:block;text-decoration:none;text-align:center;padding:13px 16px;border-radius:14px;font-size:.95rem;font-weight:700;transition:transform .15s,opacity .15s}
+    .btn:hover{transform:translateY(-2px);opacity:.93}
+    .btn-map{background:linear-gradient(160deg,#29553f,#173f2d);color:#f1dfad;box-shadow:0 6px 20px rgba(23,63,45,.35)}
+    .btn-wa{background:linear-gradient(160deg,#f1dfad,#d6b468);color:#2a1e08;box-shadow:0 6px 20px rgba(180,148,80,.3)}
+
+    /* ── MOTIF STRIP ── */
+    .motif-strip{text-align:center;padding:14px 20px 6px;background:#173f2d}
+    .footer{text-align:center;padding:12px;background:#0d2e1a;color:rgba(241,223,173,.45);font-size:.82rem;letter-spacing:.06em}
+
+    @media(max-width:680px){
+      body{padding:12px}
+      .hero{padding:44px 20px 40px}
+      .body{padding:18px}
+      .grid{grid-template-columns:1fr}
+      .deco-left,.deco-right{display:none}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ketupat background pattern -->
+  <div class="pattern-overlay">
+    <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="kp" x="0" y="0" width="70" height="70" patternUnits="userSpaceOnUse">
+          <polygon points="35,5 65,35 35,65 5,35" fill="none" stroke="#d6b468" stroke-width="1.2"/>
+          <polygon points="35,18 52,35 35,52 18,35" fill="none" stroke="#d6b468" stroke-width=".7"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#kp)"/>
+    </svg>
+  </div>
+
+  <div class="raya-wrap">
+    <div class="card">
+
+      <!-- ── HERO ── -->
+      <div class="hero">
+        <div class="hero-border"></div>
+        <div class="hero-corner tl"></div>
+        <div class="hero-corner tr"></div>
+        <div class="hero-corner bl"></div>
+        <div class="hero-corner br"></div>
+
+        <!-- Crescent left -->
+        <div class="deco-left">
+          <svg width="60" height="80" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M38 10 A28 28 0 1 0 38 70 A20 20 0 1 1 38 10Z" fill="#d6b468"/>
+            <polygon points="44,8 47,14 53,12 49,17 52,23 46,20 43,26 42,20 36,19 41,15" fill="#d6b468"/>
+          </svg>
+        </div>
+
+        <!-- Crescent right -->
+        <div class="deco-right">
+          <svg width="60" height="80" viewBox="0 0 60 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22 10 A28 28 0 1 1 22 70 A20 20 0 1 0 22 10Z" fill="#d6b468"/>
+            <polygon points="16,8 13,14 7,12 11,17 8,23 14,20 17,26 18,20 24,19 19,15" fill="#d6b468"/>
+          </svg>
+        </div>
+
+        <div style="position:relative;z-index:2">
+          <div class="kicker">✦ Selamat Hari Raya ✦</div>
+          <h1>Aidilfitri</h1>
+          <div class="raya-arabic">عيد الفطر المبارك</div>
+
+          <!-- Pelita lanterns -->
+          <div class="pelita-row">
+            <svg width="28" height="52" viewBox="0 0 28 52">
+              <rect x="10" y="0" width="8" height="6" rx="2" fill="#d6b468"/>
+              <rect x="8" y="6" width="12" height="2" fill="#b8963c"/>
+              <rect x="5" y="8" width="18" height="30" rx="4" fill="#1c4a31" stroke="#d6b468" stroke-width="1"/>
+              <rect x="7" y="10" width="14" height="26" rx="3" fill="rgba(255,210,100,.15)"/>
+              <ellipse cx="14" cy="24" rx="3" ry="4" fill="#f5c842" opacity=".9"/>
+              <ellipse cx="14" cy="24" rx="1.5" ry="2.5" fill="#fff8c0"/>
+              <rect x="8" y="38" width="12" height="3" rx="1" fill="#b8963c"/>
+              <rect x="11" y="41" width="6" height="8" rx="1" fill="#d6b468"/>
+            </svg>
+            <svg width="36" height="66" viewBox="0 0 36 66">
+              <rect x="13" y="0" width="10" height="7" rx="2" fill="#d6b468"/>
+              <rect x="10" y="7" width="16" height="2.5" fill="#b8963c"/>
+              <rect x="6" y="9.5" width="24" height="38" rx="5" fill="#1c4a31" stroke="#d6b468" stroke-width="1.2"/>
+              <rect x="8" y="12" width="20" height="33" rx="4" fill="rgba(255,210,100,.18)"/>
+              <ellipse cx="18" cy="30" rx="4" ry="5" fill="#f5c842" opacity=".95"/>
+              <ellipse cx="18" cy="30" rx="2" ry="3" fill="#fff8c0"/>
+              <rect x="9" y="47.5" width="18" height="3.5" rx="1.5" fill="#b8963c"/>
+              <rect x="13" y="51" width="10" height="12" rx="2" fill="#d6b468"/>
+            </svg>
+            <svg width="28" height="52" viewBox="0 0 28 52">
+              <rect x="10" y="0" width="8" height="6" rx="2" fill="#d6b468"/>
+              <rect x="8" y="6" width="12" height="2" fill="#b8963c"/>
+              <rect x="5" y="8" width="18" height="30" rx="4" fill="#1c4a31" stroke="#d6b468" stroke-width="1"/>
+              <rect x="7" y="10" width="14" height="26" rx="3" fill="rgba(255,210,100,.15)"/>
+              <ellipse cx="14" cy="24" rx="3" ry="4" fill="#f5c842" opacity=".9"/>
+              <ellipse cx="14" cy="24" rx="1.5" ry="2.5" fill="#fff8c0"/>
+              <rect x="8" y="38" width="12" height="3" rx="1" fill="#b8963c"/>
+              <rect x="11" y="41" width="6" height="8" rx="1" fill="#d6b468"/>
+            </svg>
+          </div>
+
+          <div class="tag">✦ Jemputan Rumah Terbuka ✦</div>
+          <div class="names">Hafiz &amp; Hafizah</div>
+        </div>
+      </div>
+
+      <!-- ── BODY ── -->
+      <div class="body">
+        <div class="grid">
+
+          <!-- Left panel: details -->
+          <div class="panel">
+            <div class="panel-title">Butiran Majlis</div>
+
+            <div class="detail-item">
+              <div class="icon-box">📅</div>
+              <div>
+                <div class="lbl">Tarikh</div>
+                <div class="val">11 April 2026 (Sabtu)</div>
+              </div>
+            </div>
+
+            <div class="detail-item">
+              <div class="icon-box">🕑</div>
+              <div>
+                <div class="lbl">Masa</div>
+                <div class="val">2:00 Petang</div>
+              </div>
+            </div>
+
+            <div class="detail-item">
+              <div class="icon-box">📍</div>
+              <div>
+                <div class="lbl">Alamat</div>
+                <div class="val">
+                  No 39, Lorong Seri Putera 4,<br>
+                  Taman Seri Putera,<br>
+                  14300 Nibong Tebal<br>
+                  <span style="color:#8a6e40;font-weight:400;font-size:.92rem">(Depan Surau)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="note-box">
+              Diharap dengan kehadiran <strong>Cik / Tuan / Puan</strong> dapat memeriahkan majlis kami. Keluarga besar turut dijemput hadir sama. 🌙
+            </div>
+
+            <div class="closing">
+              Salam Aidilfitri buat semua.<br>
+              Maaf Zahir &amp; Batin 🌿
+            </div>
+          </div>
+
+          <!-- Right panel: countdown + buttons -->
+          <div class="panel">
+            <div class="panel-title">Countdown Majlis</div>
+
+            <div class="countdown">
+              <div class="cbox"><strong id="days">—</strong><span>Hari</span></div>
+              <div class="cbox"><strong id="hours">—</strong><span>Jam</span></div>
+              <div class="cbox"><strong id="minutes">—</strong><span>Minit</span></div>
+              <div class="cbox"><strong id="seconds">—</strong><span>Saat</span></div>
+            </div>
+
+            <!-- Ketupat decorative row -->
+            <div style="text-align:center;margin:14px 0 10px;opacity:.55">
+              <svg width="180" height="30" viewBox="0 0 180 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="15,1 29,15 15,29 1,15" fill="none" stroke="#b8963c" stroke-width="1.2"/>
+                <polygon points="50,1 64,15 50,29 36,15" fill="none" stroke="#b8963c" stroke-width="1.2"/>
+                <polygon points="90,1 104,15 90,29 76,15" fill="#b8963c" fill-opacity=".3" stroke="#b8963c" stroke-width="1.2"/>
+                <polygon points="130,1 144,15 130,29 116,15" fill="none" stroke="#b8963c" stroke-width="1.2"/>
+                <polygon points="165,1 179,15 165,29 151,15" fill="none" stroke="#b8963c" stroke-width="1.2"/>
+              </svg>
+            </div>
+
+            <div class="btns">
+              <a class="btn btn-map"
+                 href="https://www.google.com/maps/search/?api=1&query=No+39+Lorong+Seri+Putera+4+Taman+Seri+Putera+14300+Nibong+Tebal"
+                 target="_blank" rel="noopener">
+                🗺️ Buka Lokasi di Google Maps
+              </a>
+              <a class="btn btn-wa"
+                 href="https://wa.me/6014645783?text=Assalamualaikum%2C%20saya%20ingin%20bertanya%20mengenai%20Jemputan%20Rumah%20Terbuka%20Aidilfitri%20Hafiz%20%26%20Hafizah."
+                 target="_blank" rel="noopener">
+                💬 WhatsApp Tuan Rumah
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Motif strip -->
+      <div class="motif-strip">
+        <svg width="500" height="22" viewBox="0 0 500 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="0" y1="11" x2="180" y2="11" stroke="#d6b468" stroke-width=".5"/>
+          <polygon points="210,2 224,11 210,20 196,11" fill="none" stroke="#d6b468" stroke-width="1"/>
+          <polygon points="228,5 238,11 228,17 218,11" fill="none" stroke="#d6b468" stroke-width=".8"/>
+          <polygon points="250,2 264,11 250,20 236,11" fill="#d6b468" fill-opacity=".3" stroke="#d6b468" stroke-width="1"/>
+          <polygon points="272,5 282,11 272,17 262,11" fill="none" stroke="#d6b468" stroke-width=".8"/>
+          <polygon points="290,2 304,11 290,20 276,11" fill="none" stroke="#d6b468" stroke-width="1"/>
+          <line x1="320" y1="11" x2="500" y2="11" stroke="#d6b468" stroke-width=".5"/>
+        </svg>
+      </div>
+
+      <div class="footer">e-Invite Rumah Terbuka Aidilfitri ✦ Hafiz &amp; Hafizah ✦ 2026</div>
+
+    </div>
+  </div>
+
+  <script>
+    const eventDate = new Date('2026-04-11T14:00:00+08:00');
+
+    function updateCountdown() {
+      let diff = eventDate - new Date();
+      if (diff < 0) diff = 0;
+      document.getElementById('days').textContent    = Math.floor(diff / 86400000);
+      document.getElementById('hours').textContent   = Math.floor((diff / 3600000) % 24);
+      document.getElementById('minutes').textContent = Math.floor((diff / 60000) % 60);
+      document.getElementById('seconds').textContent = Math.floor((diff / 1000) % 60);
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+
+</body>
+</html>
