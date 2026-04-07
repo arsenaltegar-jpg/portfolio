@@ -70,6 +70,23 @@
     .cal-option:hover{background:rgba(214,180,104,.15)}
     .cal-option span{font-size:1.1rem}
 
+    /* ── MUSIC PLAYER ── */
+    .music-bar{display:flex;align-items:center;gap:12px;padding:10px 16px;background:linear-gradient(135deg,rgba(23,63,45,.12),rgba(214,180,104,.1));border:1px solid rgba(180,148,80,.25);border-radius:14px;margin-top:2px}
+    .music-toggle{width:36px;height:36px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(160deg,#29553f,#173f2d);color:#f1dfad;font-size:1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 10px rgba(23,63,45,.3);transition:transform .15s}
+    .music-toggle:hover{transform:scale(1.08)}
+    .music-info{flex:1;min-width:0}
+    .music-title{font-size:.82rem;font-weight:700;color:#173f2d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .music-sub{font-size:.72rem;color:#8a6e40}
+    .music-wave{display:flex;align-items:flex-end;gap:3px;height:20px;flex-shrink:0}
+    .music-wave span{width:3px;border-radius:2px;background:#c9a84c;animation:wave 1s ease-in-out infinite}
+    .music-wave span:nth-child(1){height:6px;animation-delay:0s}
+    .music-wave span:nth-child(2){height:14px;animation-delay:.15s}
+    .music-wave span:nth-child(3){height:10px;animation-delay:.3s}
+    .music-wave span:nth-child(4){height:18px;animation-delay:.45s}
+    .music-wave span:nth-child(5){height:8px;animation-delay:.6s}
+    .music-wave.paused span{animation-play-state:paused}
+    @keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.8)}}
+
     .footer{text-align:center;padding:12px;background:#0d2e1a;color:rgba(241,223,173,.45);font-size:.82rem;letter-spacing:.06em}
 
     /* ── MOBILE: stack vertically, full poster ── */
@@ -91,6 +108,11 @@
   </style>
 </head>
 <body>
+
+  <!-- Background music (autoplay with fallback interaction) -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="Santai Raya Hafiz.mp3" type="audio/mpeg">
+  </audio>
 
   <div class="pattern-overlay">
     <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
@@ -177,7 +199,19 @@
               </svg>
             </div>
 
-            <div class="btns">
+            <!-- Music player bar -->
+            <div class="music-bar">
+              <button class="music-toggle" id="musicBtn" onclick="toggleMusic()" title="Play/Pause">▶</button>
+              <div class="music-info">
+                <div class="music-title">🎵 Santai Raya Hafiz</div>
+                <div class="music-sub" id="musicSub">Klik untuk mainkan muzik</div>
+              </div>
+              <div class="music-wave paused" id="musicWave">
+                <span></span><span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+
+            <div class="btns" style="margin-top:9px">
               <a class="btn btn-map"
                  href="https://maps.app.goo.gl/ZmTr4FXzNYVHsEwK9"
                  target="_blank" rel="noopener">
@@ -218,6 +252,7 @@
   </div>
 
   <script>
+    /* ── COUNTDOWN ── */
     const eventDate = new Date('2026-04-11T14:00:00+08:00');
     function updateCountdown() {
       let diff = eventDate - new Date();
@@ -230,6 +265,7 @@
     updateCountdown();
     setInterval(updateCountdown, 1000);
 
+    /* ── CALENDAR ── */
     const calTitle   = 'Rumah Terbuka Aidilfitri - Hafiz & Hafizah';
     const calDetails = 'Jemputan Rumah Terbuka Aidilfitri Hafiz & Hafizah. Semua dijemput hadir!';
     const calLoc     = 'No 39, Lorong Seri Putera 4, Taman Seri Putera, 14300 Nibong Tebal';
@@ -262,6 +298,47 @@
     }
     document.addEventListener('click', function() {
       document.getElementById('calDropdown').classList.remove('open');
+    });
+
+    /* ── MUSIC ── */
+    const audio    = document.getElementById('bgMusic');
+    const btn      = document.getElementById('musicBtn');
+    const wave     = document.getElementById('musicWave');
+    const sub      = document.getElementById('musicSub');
+    let   playing  = false;
+
+    function setPlaying(state) {
+      playing = state;
+      btn.textContent  = playing ? '⏸' : '▶';
+      sub.textContent  = playing ? 'Sedang dimainkan...' : 'Klik untuk mainkan muzik';
+      playing ? wave.classList.remove('paused') : wave.classList.add('paused');
+    }
+
+    function toggleMusic() {
+      if (playing) {
+        audio.pause();
+        setPlaying(false);
+      } else {
+        audio.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
+      }
+    }
+
+    /* Autoplay on first user interaction with the page */
+    function tryAutoplay() {
+      audio.play().then(() => {
+        setPlaying(true);
+        document.removeEventListener('click', tryAutoplay);
+        document.removeEventListener('touchstart', tryAutoplay);
+        document.removeEventListener('keydown', tryAutoplay);
+      }).catch(() => {});
+    }
+
+    /* Attempt immediate autoplay (works on desktop / some browsers) */
+    audio.play().then(() => setPlaying(true)).catch(() => {
+      /* Blocked by browser policy — wait for first interaction */
+      document.addEventListener('click', tryAutoplay);
+      document.addEventListener('touchstart', tryAutoplay);
+      document.addEventListener('keydown', tryAutoplay);
     });
   </script>
 
