@@ -333,16 +333,13 @@
       }).catch(() => {});
     }
 
-    /* Autoplay muted first (bypasses browser policy), then unmute */
-audio.muted = true;
-audio.play().then(() => {
-  audio.muted = false;   // unmute immediately after play starts
-  setPlaying(true);
-}).catch(() => {
-  document.addEventListener('click', tryAutoplay);
-  document.addEventListener('touchstart', tryAutoplay);
-  document.addEventListener('keydown', tryAutoplay);
-});
+    /* Attempt immediate autoplay (works on desktop / some browsers) */
+    audio.play().then(() => setPlaying(true)).catch(() => {
+      /* Blocked by browser policy — wait for first interaction */
+      document.addEventListener('click', tryAutoplay);
+      document.addEventListener('touchstart', tryAutoplay);
+      document.addEventListener('keydown', tryAutoplay);
+    });
   </script>
 
 </body>
