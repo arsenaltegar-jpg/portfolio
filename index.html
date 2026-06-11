@@ -70,7 +70,8 @@
         .profile-block { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem; }
 
         .profile-img {
-            width: 132px; height: 132px; border-radius: 50%;
+            width: 132px; height: 132px; min-width: 132px; aspect-ratio: 1 / 1; border-radius: 999px;
+            flex: 0 0 132px; display: block;
             border: 3px solid rgba(34, 211, 238, 0.55);
             object-fit: cover; box-shadow: 0 0 40px var(--primary-glow);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -188,7 +189,7 @@
             .nav-links { gap: 0.8rem; flex-wrap: wrap; }
             .hero { padding: 3.5rem 0 3rem; }
             .profile-block { flex-direction: column; }
-            .profile-img { width: 116px; height: 116px; }
+            .profile-img { width: 116px; height: 116px; min-width: 116px; flex-basis: 116px; }
             .button-row, .btn-link { width: 100%; }
             .stats-grid { grid-template-columns: 1fr 1fr; }
             .resume-container { padding: 1.35rem; }
